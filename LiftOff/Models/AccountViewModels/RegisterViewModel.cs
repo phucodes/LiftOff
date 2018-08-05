@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,5 +24,13 @@ namespace LiftOff.Models.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string Role { get; set; }
+
+        public List<SelectListItem> Roles { get; } = new List<SelectListItem>
+        {
+            new SelectListItem {Value = "User", Text = "User"},
+            new SelectListItem {Value = "Employer", Text = "Employer"}
+        };
     }
 }

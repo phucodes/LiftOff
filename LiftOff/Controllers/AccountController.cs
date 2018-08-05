@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using LiftOff.Models;
 using LiftOff.Models.AccountViewModels;
 using LiftOff.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace LiftOff.Controllers
 {
@@ -209,7 +210,8 @@ namespace LiftOff.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            RegisterViewModel registerViewModel = new RegisterViewModel();
+            return View(registerViewModel);
         }
 
         [HttpPost]
@@ -225,6 +227,8 @@ namespace LiftOff.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    await _userManager.AddToRoleAsync(user, model.Role);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
