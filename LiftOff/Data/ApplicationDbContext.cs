@@ -13,8 +13,10 @@ namespace LiftOff.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-           
+
         }
+
+        // public DbSet<Job> Job { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
