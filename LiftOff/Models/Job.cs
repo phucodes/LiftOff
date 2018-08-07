@@ -7,9 +7,7 @@ namespace LiftOff.Models
 {
     public class Job
     {
-        public int Id { get; set; }
-
-        private static int nextId = 1;
+        public int JobId { get; set; }
 
         public string Name { get; set; }
 
@@ -23,13 +21,6 @@ namespace LiftOff.Models
 
         public string Description { get; set; }
 
-        // public Employer Employer { get; set; }
-
-        public Job()
-        {
-            Id = nextId;
-            nextId++;
-        }
-
+         public string Employer { get; set; }
     }
 }
