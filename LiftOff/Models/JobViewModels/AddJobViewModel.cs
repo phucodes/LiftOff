@@ -31,5 +31,7 @@ namespace LiftOff.Models.JobViewModels
 
         [DataType(DataType.Date)]
         public DateTime DatePosted { get; set; }
+
+        public bool IsOpened { get; set; }
     }
 }
