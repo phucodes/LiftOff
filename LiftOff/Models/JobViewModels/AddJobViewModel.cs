@@ -18,11 +18,11 @@ namespace LiftOff.Models.JobViewModels
         public string Location { get; set; }
 
         [Required]
-        [Display(Name = "PositionType")]
+        [Display(Name = "Position Type")]
         public string PositionType { get; set; }
 
         [Required]
-        [Display(Name = "PositionLevel")]
+        [Display(Name = "Position Level")]
         public string PositionLevel { get; set; }
 
         [Required]
