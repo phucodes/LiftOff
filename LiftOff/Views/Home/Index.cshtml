@@ -1,1 +1,12 @@
-﻿<p><a asp-controller="Job" asp-action="Index">View List of Jobs</a></p>
+﻿@using Microsoft.AspNetCore.Identity
+@using LiftOff.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<p><a asp-controller="Job" asp-action="Index">View List of Jobs</a></p>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <p><a asp-controller="Job" asp-action="YourJob">View Your List of Openings</a></p>
+}
