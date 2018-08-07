@@ -29,6 +29,7 @@ namespace LiftOff.Models.JobViewModels
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [DataType(DataType.Date)]
         public DateTime DatePosted { get; set; }
     }
 }
