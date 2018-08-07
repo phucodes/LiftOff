@@ -11,9 +11,10 @@ using System;
 namespace LiftOff.Migrations
 {
     [DbContext(typeof(JobDbContext))]
-    partial class JobDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180807041739_MiscUpdate")]
+    partial class MiscUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,8 +29,6 @@ namespace LiftOff.Migrations
                     b.Property<DateTime>("DatePosted");
 
                     b.Property<string>("Description");
-
-                    b.Property<string>("Employer");
 
                     b.Property<string>("Location");
 
