@@ -22,5 +22,7 @@ namespace LiftOff.Models
         public string Description { get; set; }
 
          public string Employer { get; set; }
+
+        public bool IsOpened { get; set; }
     }
 }
