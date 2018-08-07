@@ -16,8 +16,6 @@ namespace LiftOff.Controllers
     [Authorize(Roles = "Employer")]
     public class JobController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-
         private JobDbContext context;
 
         public JobController(JobDbContext dbContext)
@@ -62,6 +60,23 @@ namespace LiftOff.Controllers
 
         [HttpGet]
         public IActionResult ViewJob(int id)
+        {   
+            Job viewJob = context.Job.Find(id);
+            AddJobViewModel currentJob = new AddJobViewModel
+            {
+                Name = viewJob.Name,
+                DatePosted = viewJob.DatePosted,
+                Location = viewJob.Location,
+                PositionType = viewJob.PositionType,
+                PositionLevel = viewJob.PositionLevel,
+                Description = viewJob.Description
+            };
+
+            return View(viewJob);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
             Job viewJob = context.Job.Find(id);
             AddJobViewModel currentJob = new AddJobViewModel
@@ -75,6 +90,16 @@ namespace LiftOff.Controllers
             };
 
             return View(viewJob);
+        }
+
+        // TODO: FINISH EDIT ACTIONS
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Index()
+        {
+            List<Job> jobs = context.Job.ToList();
+            return View(jobs);
         }
     }
 }
