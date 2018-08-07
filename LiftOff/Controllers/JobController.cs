@@ -46,7 +46,8 @@ namespace LiftOff.Controllers
                     PositionType = addJobViewModel.PositionType,
                     PositionLevel = addJobViewModel.PositionLevel,
                     Description = addJobViewModel.Description,
-                    Employer = currentUser
+                    Employer = currentUser,
+                    IsOpened = true
                 };
                 context.Job.Add(newJob);
                 context.SaveChanges();
@@ -69,24 +70,8 @@ namespace LiftOff.Controllers
                 Location = viewJob.Location,
                 PositionType = viewJob.PositionType,
                 PositionLevel = viewJob.PositionLevel,
-                Description = viewJob.Description
-            };
-
-            return View(viewJob);
-        }
-
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            Job viewJob = context.Job.Find(id);
-            AddJobViewModel currentJob = new AddJobViewModel
-            {
-                Name = viewJob.Name,
-                DatePosted = viewJob.DatePosted,
-                Location = viewJob.Location,
-                PositionType = viewJob.PositionType,
-                PositionLevel = viewJob.PositionLevel,
-                Description = viewJob.Description
+                Description = viewJob.Description,
+                IsOpened = viewJob.IsOpened
             };
 
             return View(viewJob);
@@ -98,7 +83,17 @@ namespace LiftOff.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            List<Job> jobs = context.Job.ToList();
+            List<Job> jobs = context.Job.Where(job => job.IsOpened == true).ToList();
+            //List<Job> jobs = context.Job.ToList();
+            return View(jobs);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Employer")]
+        public IActionResult YourJob()
+        {
+            var currentUser = HttpContext.User.Identity;
+            List<Job> jobs = context.Job.Where(job => job.Employer == currentUser.Name).ToList();
             return View(jobs);
         }
     }
