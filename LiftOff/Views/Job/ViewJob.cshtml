@@ -9,6 +9,10 @@
             <th scope="col">Position Level</th>
             <th scope="col">Position Type</th>
             <th scope="col">Employer</th>
+            @if (User.IsInRole("Employer"))
+            {
+                <th scope="col">Availability</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -19,6 +23,10 @@
             <td>@Model.PositionLevel</td>
             <td>@Model.PositionType</td>
             <td>@Model.Employer</td>
-        </tr>
+            @if (User.IsInRole("Employer"))
+            {
+                <td>@Model.IsOpened</td>
+            }
+            </tr>
     </tbody>
 </table>
