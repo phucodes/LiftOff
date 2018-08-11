@@ -1,8 +1,8 @@
 ﻿@model LiftOff.Models.JobViewModels.AddJobViewModel
 
-<div asp-validation-summary ="All">
+<div asp-validation-summary="All">
 
-    <form asp-controller="Job" asp-action="Add" method="post">
+    <form asp-controller="Job" asp-action="Add" method="post" id="item-list">
         <div class="form-group">
             <label asp-for="Name"></label>
             <input class="form-control" asp-for="Name" />
@@ -32,6 +32,14 @@
             <input class="form-control" asp-for="Description" />
             <span asp-validation-for="Description"></span>
         </div>
+
+        <div class="form-group">
+            <label asp-for="RequirementNames"></label>
+            <input class="form-control" asp-for="RequirementNames" />
+            <span asp-validation-for="RequirementNames"></span>
+        </div>
+
+        <a href="#" id="add">Add</a>
 
         <input type="submit" value="Add Job" />
     </form>
