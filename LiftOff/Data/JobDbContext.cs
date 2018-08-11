@@ -9,10 +9,12 @@ namespace LiftOff.Data
 {
     public class JobDbContext : DbContext
 
-        // TODO: FIX ADDING ITEM: IDENTITY IS SET TO OFF
+    // TODO: FIX ADDING ITEM: IDENTITY IS SET TO OFF
 
     {
         public DbSet<Job> Job { get; set; }
+
+        public DbSet<Requirement> Requirements { get; set; }
 
         public JobDbContext(DbContextOptions<JobDbContext> options) : base(options)
         { }
