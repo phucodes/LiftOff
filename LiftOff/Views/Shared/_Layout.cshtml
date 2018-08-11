@@ -47,7 +47,9 @@
     </div>
 
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
@@ -68,5 +70,24 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(function () {
+
+                $("#add").click(function (e) {
+                    e.preventDefault();
+                    var i = $("#items").length;
+                    var n = `        <div class="form-group">
+                        <label for="RequirementNames">RequirementNames</label>
+                        <input class="form-control" id="RequirementNames" name="RequirementNames" value="" type="text">
+                        <span class="field-validation-valid" data-valmsg-for="RequirementNames" data-valmsg-replace="true"></span>
+                            </div>`;
+                    $("#item-list").append(n);
+                });
+
+            });
+        });
+    </script>
 </body>
 </html>
