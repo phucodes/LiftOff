@@ -32,7 +32,7 @@ namespace LiftOff.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(AddJobViewModel addJobViewModel, List<string> RequirementNames)
+        public IActionResult Add(AddJobViewModel addJobViewModel, List<string> RequirementNames, List<string> BenefitNames)
         {
             if (ModelState.IsValid)
             {   
@@ -71,6 +71,16 @@ namespace LiftOff.Controllers
                     context.SaveChanges();
                 }
 
+                foreach (var item in BenefitNames)
+                {
+                    Benefit newBenefit = new Benefit()
+                    {
+                        BenefitName = item,
+                        JobId = newJob.JobId
+                    };
+                    context.Benefits.Add(newBenefit);
+                    context.SaveChanges();
+                }
 
                 return RedirectToAction("ViewJob", new { id = newJob.JobId });
             }
