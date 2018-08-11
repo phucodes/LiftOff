@@ -33,5 +33,7 @@ namespace LiftOff.Models.JobViewModels
         public DateTime DatePosted { get; set; }
 
         public bool IsOpened { get; set; }
+        
+        public Requirement RequirementNames { get; set; }
     }
 }
