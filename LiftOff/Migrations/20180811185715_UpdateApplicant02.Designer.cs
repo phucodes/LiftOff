@@ -11,9 +11,10 @@ using System;
 namespace LiftOff.Migrations
 {
     [DbContext(typeof(JobDbContext))]
-    partial class JobDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180811185715_UpdateApplicant02")]
+    partial class UpdateApplicant02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,7 +124,7 @@ namespace LiftOff.Migrations
             modelBuilder.Entity("LiftOff.Models.ApplicationUser", b =>
                 {
                     b.HasOne("LiftOff.Models.Job")
-                        .WithMany("Applicants")
+                        .WithMany("Id")
                         .HasForeignKey("JobId");
                 });
 
