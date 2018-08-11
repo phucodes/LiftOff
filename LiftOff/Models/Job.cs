@@ -52,7 +52,7 @@ namespace LiftOff.Models
     public class Tag
     {
         public int Id { get; set; }
-        public Job JobId { get; set; }
+        public int JobId { get; set; }
         public string TagName { get; set; }
     }
 }
