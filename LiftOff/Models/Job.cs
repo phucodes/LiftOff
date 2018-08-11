@@ -21,8 +21,17 @@ namespace LiftOff.Models
 
         public string Description { get; set; }
 
-         public string Employer { get; set; }
+        public string Employer { get; set; }
 
         public bool IsOpened { get; set; }
+
+        public List<Requirement> Requirements { get; set; }
+    }
+
+    public class Requirement
+    {   
+        public int Id { get; set; }
+        public int JobId { get; set; }
+        public string RequirementName { get; set; }
     }
 }
