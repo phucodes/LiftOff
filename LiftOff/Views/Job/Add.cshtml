@@ -39,7 +39,15 @@
             <span asp-validation-for="RequirementNames"></span>
         </div>
 
-        <a href="#" id="add">Add</a>
+        <div class="form-group">
+            <label asp-for="BenefitNames"></label>
+            <input class="form-control" asp-for="BenefitNames" />
+            <span asp-validation-for="BenefitNames"></span>
+        </div>
+
+        <a href="#" id="add">Add Requirements</a>
+
+        <a href="#" id="add-benefit">Add Benefits</a>
 
         <input type="submit" value="Add Job" />
     </form>
