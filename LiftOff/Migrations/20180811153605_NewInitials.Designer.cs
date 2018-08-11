@@ -11,8 +11,8 @@ using System;
 namespace LiftOff.Migrations
 {
     [DbContext(typeof(JobDbContext))]
-    [Migration("20180807031902_UpdateDb")]
-    partial class UpdateDb
+    [Migration("20180811153605_NewInitials")]
+    partial class NewInitials
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,12 +23,16 @@ namespace LiftOff.Migrations
 
             modelBuilder.Entity("LiftOff.Models.Job", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("JobId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DatePosted");
 
                     b.Property<string>("Description");
+
+                    b.Property<string>("Employer");
+
+                    b.Property<bool>("IsOpened");
 
                     b.Property<string>("Location");
 
@@ -38,9 +42,33 @@ namespace LiftOff.Migrations
 
                     b.Property<string>("PositionType");
 
-                    b.HasKey("Id");
+                    b.HasKey("JobId");
 
                     b.ToTable("Job");
+                });
+
+            modelBuilder.Entity("LiftOff.Models.Requirement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("JobId");
+
+                    b.Property<string>("RequirementName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("Requirements");
+                });
+
+            modelBuilder.Entity("LiftOff.Models.Requirement", b =>
+                {
+                    b.HasOne("LiftOff.Models.Job")
+                        .WithMany("Requirements")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

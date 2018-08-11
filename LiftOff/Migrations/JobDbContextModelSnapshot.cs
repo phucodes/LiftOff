@@ -45,6 +45,30 @@ namespace LiftOff.Migrations
 
                     b.ToTable("Job");
                 });
+
+            modelBuilder.Entity("LiftOff.Models.Requirement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("JobId");
+
+                    b.Property<string>("RequirementName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("Requirements");
+                });
+
+            modelBuilder.Entity("LiftOff.Models.Requirement", b =>
+                {
+                    b.HasOne("LiftOff.Models.Job")
+                        .WithMany("Requirements")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
 #pragma warning restore 612, 618
         }
     }
