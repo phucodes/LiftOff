@@ -26,6 +26,8 @@ namespace LiftOff.Models
         public bool IsOpened { get; set; }
 
         public List<Requirement> Requirements { get; set; }
+
+        public List<Benefit> Benefits { get; set; }
     }
 
     public class Requirement
@@ -33,5 +35,12 @@ namespace LiftOff.Models
         public int Id { get; set; }
         public int JobId { get; set; }
         public string RequirementName { get; set; }
+    }
+
+    public class Benefit
+    {
+        public int Id { get; set; }
+        public int JobId { get; set; }
+        public string BenefitName { get; set; }
     }
 }
