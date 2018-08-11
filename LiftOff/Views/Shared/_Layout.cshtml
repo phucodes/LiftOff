@@ -72,6 +72,8 @@
     @RenderSection("Scripts", required: false)
     <script type="text/javascript">
 
+
+        // For dynamic Requirement inputs
         $(document).ready(function () {
             $(function () {
 
@@ -88,6 +90,7 @@
 
             });
 
+            // For dynamic Benefit inputs
             $(function () {
 
                 $("#add-benefit").click(function (e) {
@@ -97,6 +100,22 @@
                         <label for="BenefitNames">BenefitNames</label>
                         <input class="form-control" id="BenefitNames" name="BenefitNames" value="" type="text">
                         <span class="field-validation-valid" data-valmsg-for="BenefitNames" data-valmsg-replace="true"></span>
+                            </div>`;
+                    $("#item-list").append(n);
+                });
+
+            });
+
+            // For dynamic Benefit inputs
+            $(function () {
+
+                $("#add-benefit").click(function (e) {
+                    e.preventDefault();
+                    var i = $("#items").length;
+                    var n = `        <div class="form-group">
+                        <label for="TagNames">TagNames</label>
+                        <input class="form-control" id="TagNames" name="TagNames" value="" type="text">
+                        <span class="field-validation-valid" data-valmsg-for="TagNames" data-valmsg-replace="true"></span>
                             </div>`;
                     $("#item-list").append(n);
                 });
