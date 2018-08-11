@@ -17,6 +17,8 @@ namespace LiftOff.Data
         public DbSet<Requirement> Requirements { get; set; }
 
         public DbSet<Benefit> Benefits { get; set; }
+        
+        public DbSet<Tag> Tags { get; set; }
 
         public JobDbContext(DbContextOptions<JobDbContext> options) : base(options)
         { }
