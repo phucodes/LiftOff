@@ -31,6 +31,8 @@ namespace LiftOff.Models
         public List<Benefit> Benefits { get; set; }
 
         public List<ApplicationUser> Applicants { get; set; }
+
+        public List<Tag> Tags { get; set; }
     }
 
     public class Requirement
@@ -45,5 +47,12 @@ namespace LiftOff.Models
         public int Id { get; set; }
         public int JobId { get; set; }
         public string BenefitName { get; set; }
+    }
+
+    public class Tag
+    {
+        public int Id { get; set; }
+        public Job JobId { get; set; }
+        public string TagName { get; set; }
     }
 }
