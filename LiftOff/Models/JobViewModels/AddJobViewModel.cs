@@ -34,8 +34,16 @@ namespace LiftOff.Models.JobViewModels
 
         public bool IsOpened { get; set; }
         
+        [Required]
+        [Display(Name = "Requirements")]
         public Requirement RequirementNames { get; set; }
 
+        [Required]
+        [Display(Name = "Benefits")]
         public Benefit BenefitNames { get; set; }
+
+        [Required]
+        [Display(Name = "Add Tags")]
+        public Tag TagNames { get; set; }
     }
 }
