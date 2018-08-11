@@ -32,11 +32,12 @@ namespace LiftOff.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(AddJobViewModel addJobViewModel)
+        public IActionResult Add(AddJobViewModel addJobViewModel, List<string> RequirementNames)
         {
             if (ModelState.IsValid)
-            {
+            {   
                 // var currentUser = _userManager.GetUserName(HttpContext.User);
+
                 var currentUser = HttpContext.User.Identity.Name;
                 Job newJob = new Job()
                 {
@@ -47,10 +48,29 @@ namespace LiftOff.Controllers
                     PositionLevel = addJobViewModel.PositionLevel,
                     Description = addJobViewModel.Description,
                     Employer = currentUser,
-                    IsOpened = true
+                    IsOpened = true,
+                    //Requirement = addJobViewModel.Requirement
+                    //RequirementName = addJobViewModel.RequirementName,
+                    //ListRequirements = addJobViewModel.ListRequirements
                 };
                 context.Job.Add(newJob);
                 context.SaveChanges();
+
+                int ReqNameLength = RequirementNames.Count();
+
+                foreach (var item in RequirementNames)
+                {
+                    //int currentId = newJob.JobId;
+                    
+                    Requirement newRequirement = new Requirement()
+                    {
+                        RequirementName = item,
+                        JobId = newJob.JobId
+                    };
+                    context.Requirements.Add(newRequirement);
+                    context.SaveChanges();
+                }
+
 
                 return RedirectToAction("ViewJob", new { id = newJob.JobId });
             }
