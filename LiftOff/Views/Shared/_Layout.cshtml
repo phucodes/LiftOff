@@ -87,6 +87,21 @@
                 });
 
             });
+
+            $(function () {
+
+                $("#add-benefit").click(function (e) {
+                    e.preventDefault();
+                    var i = $("#items").length;
+                    var n = `        <div class="form-group">
+                        <label for="BenefitNames">BenefitNames</label>
+                        <input class="form-control" id="BenefitNames" name="BenefitNames" value="" type="text">
+                        <span class="field-validation-valid" data-valmsg-for="BenefitNames" data-valmsg-replace="true"></span>
+                            </div>`;
+                    $("#item-list").append(n);
+                });
+
+            });
         });
     </script>
 </body>
