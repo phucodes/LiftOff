@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,8 @@ namespace LiftOff.Models
         public List<Requirement> Requirements { get; set; }
 
         public List<Benefit> Benefits { get; set; }
+
+        public List<ApplicationUser> Applicants { get; set; }
     }
 
     public class Requirement
