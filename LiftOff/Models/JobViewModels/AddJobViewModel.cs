@@ -35,5 +35,7 @@ namespace LiftOff.Models.JobViewModels
         public bool IsOpened { get; set; }
         
         public Requirement RequirementNames { get; set; }
+
+        public Benefit BenefitNames { get; set; }
     }
 }
