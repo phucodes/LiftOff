@@ -10,23 +10,24 @@ namespace LiftOff.Models.JobViewModels
     public class AddJobViewModel
     {
         [Required]
-        [Display(Name = "Name")]
+        [Display(Name = "Name", Prompt = "Name")]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Location")]
+        [Display(Name = "Location", Prompt = "Location")]
         public string Location { get; set; }
 
         [Required]
-        [Display(Name = "Position Type")]
+        [Display(Name = "Position Type", Prompt = "Position Type")]
         public string PositionType { get; set; }
 
         [Required]
-        [Display(Name = "Position Level")]
+        [Display(Name = "Position Level", Prompt = "Position Level")]
         public string PositionLevel { get; set; }
 
         [Required]
-        [Display(Name = "Description")]
+        [MaxLength(5000)]
+        [Display(Name = "Description", Prompt = "Description")]
         public string Description { get; set; }
 
         [DataType(DataType.Date)]
@@ -35,15 +36,15 @@ namespace LiftOff.Models.JobViewModels
         public bool IsOpened { get; set; }
         
         [Required]
-        [Display(Name = "Requirements")]
+        [Display(Name = "Requirements", Prompt = "Requirement")]
         public Requirement RequirementNames { get; set; }
 
         [Required]
-        [Display(Name = "Benefits")]
+        [Display(Name = "Benefits", Prompt = "Benefit")]
         public Benefit BenefitNames { get; set; }
 
         [Required]
-        [Display(Name = "Add Tags")]
+        [Display(Name = "Add Tags", Prompt = "Tag")]
         public Tag TagNames { get; set; }
     }
 }
