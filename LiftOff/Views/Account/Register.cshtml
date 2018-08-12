@@ -31,7 +31,7 @@
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <select asp-for="Role" asp-items="Model.Roles"></select>
+                <select asp-for="Role" asp-items="Model.Roles" class="form-group"></select>
             </div>
             <button type="submit" class="btn btn-default">Register</button>
         </form>
