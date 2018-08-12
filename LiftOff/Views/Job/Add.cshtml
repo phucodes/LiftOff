@@ -2,60 +2,61 @@
 
 <div asp-validation-summary="All">
 
-    <form asp-controller="Job" asp-action="Add" method="post" id="item-list">
-        <div class="form-group">
-            <label asp-for="Name"></label>
-            <input class="form-control" asp-for="Name" />
-            <span asp-validation-for="Name"></span>
+    <form asp-controller="Job" asp-action="Add" method="post" id="item-list" class="form-row">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="Name"></label>
+                <input class="form-control" asp-for="Name" />
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Location"></label>
+                <input class="form-control" asp-for="Location" />
+                <span asp-validation-for="Location"></span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label asp-for="Location"></label>
-            <input class="form-control" asp-for="Location" />
-            <span asp-validation-for="Location"></span>
-        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="PositionType"></label>
+                <input class="form-control" asp-for="PositionType" />
+                <span asp-validation-for="PositionType"></span>
+            </div>
 
-        <div class="form-group">
-            <label asp-for="PositionType"></label>
-            <input class="form-control" asp-for="PositionType" />
-            <span asp-validation-for="PositionType"></span>
+            <div class="form-group col-md-6">
+                <label asp-for="PositionLevel"></label>
+                <input class="form-control" asp-for="PositionLevel" />
+                <span asp-validation-for="PositionLevel"></span>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label asp-for="PositionLevel"></label>
-            <input class="form-control" asp-for="PositionLevel" />
-            <span asp-validation-for="PositionLevel"></span>
-        </div>
-
-        <div class="form-group">
+        <div class="form-group col-md-12">
             <label asp-for="Description"></label>
-            <input class="form-control" asp-for="Description" />
+            <textarea class="form-control" asp-for="Description"></textarea>
             <span asp-validation-for="Description"></span>
         </div>
-
-        <div class="form-group">
-            <label asp-for="RequirementNames"></label>
-            <input class="form-control" asp-for="RequirementNames" />
-            <span asp-validation-for="RequirementNames"></span>
+        <div class="form-row col-md-12" id="require-tab">
+            <div class="form-group col-md-6">
+                <label asp-for="RequirementNames"></label><a href="#" id="add">Add Requirements</a>
+                <input class="form-control" asp-for="RequirementNames" />
+                <span asp-validation-for="RequirementNames"></span>
+            </div>
+        </div>
+        <div class="form-row col-md-12" id="benefit-tab">
+            <div class="form-group col-md-6">
+                <label asp-for="BenefitNames"></label><a href="#" id="add-benefit">Add Benefits</a>
+                <input class="form-control" asp-for="BenefitNames" />
+                <span asp-validation-for="BenefitNames"></span>
+            </div>
+        </div>
+        <div class="form-row col-md-12" id="tag-tab">
+            <div class="form-group col-md-6">
+                <label asp-for="TagNames"></label><a href="#" id="add-tag">Add Tags</a>
+                <input class="form-control" asp-for="TagNames" />
+                <span asp-validation-for="TagNames"></span>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label asp-for="BenefitNames"></label>
-            <input class="form-control" asp-for="BenefitNames" />
-            <span asp-validation-for="BenefitNames"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="TagNames"></label>
-            <input class="form-control" asp-for="TagNames" />
-            <span asp-validation-for="TagNames"></span>
-        </div>
-
-        <a href="#" id="add">Add Requirements</a>
-
-        <a href="#" id="add-benefit">Add Benefits</a>
-
-        <input type="submit" value="Add Job" />
+        <input type="submit" value="Add Job" class="form-group col-md-12" />
     </form>
 
 </div>
