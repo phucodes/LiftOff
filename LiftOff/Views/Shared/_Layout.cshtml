@@ -79,13 +79,13 @@
 
                 $("#add").click(function (e) {
                     e.preventDefault();
-                    var i = $("#items").length;
-                    var n = `        <div class="form-group">
+                    var i = $("#require-tab").length;
+                    var n = `        <div class="form-group col-md-6">
                         <label for="RequirementNames">RequirementNames</label>
-                        <input class="form-control" id="RequirementNames" name="RequirementNames" value="" type="text">
+                        <input class="form-control" id="RequirementNames" name="RequirementNames" value="" type="text" placeholder="Requirement">
                         <span class="field-validation-valid" data-valmsg-for="RequirementNames" data-valmsg-replace="true"></span>
                             </div>`;
-                    $("#item-list").append(n);
+                    $("#require-tab").append(n);
                 });
 
             });
@@ -95,26 +95,26 @@
 
                 $("#add-benefit").click(function (e) {
                     e.preventDefault();
-                    var i = $("#items").length;
-                    var n = `        <div class="form-group">
+                    var i = $("#benefit-tab").length;
+                    var n = `        <div class="form-group col-md-6">
                         <label for="BenefitNames">BenefitNames</label>
-                        <input class="form-control" id="BenefitNames" name="BenefitNames" value="" type="text">
+                        <input class="form-control" id="BenefitNames" name="BenefitNames" value="" type="text" placeholder="Benefit">
                         <span class="field-validation-valid" data-valmsg-for="BenefitNames" data-valmsg-replace="true"></span>
                             </div>`;
-                    $("#item-list").append(n);
+                    $("#benefit-tab").append(n);
                 });
 
             });
 
-            // For dynamic Benefit inputs
+            // For dynamic tag inputs
             $(function () {
 
-                $("#add-benefit").click(function (e) {
+                $("#add-tag").click(function (e) {
                     e.preventDefault();
                     var i = $("#items").length;
-                    var n = `        <div class="form-group">
+                    var n = `        <div class="form-group col-md-6">
                         <label for="TagNames">TagNames</label>
-                        <input class="form-control" id="TagNames" name="TagNames" value="" type="text">
+                        <input class="form-control" id="TagNames" name="TagNames" value="" type="text" placeholder="Tag">
                         <span class="field-validation-valid" data-valmsg-for="TagNames" data-valmsg-replace="true"></span>
                             </div>`;
                     $("#item-list").append(n);
