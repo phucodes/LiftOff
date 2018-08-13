@@ -23,6 +23,8 @@
             <td>@job.PositionLevel</td>
             <td>@job.PositionType</td>
             <td>@job.Employer</td>
+            <td><a asp-controller="Job" asp-action="ViewJob" asp-route-id=@job.JobId>Details</a></td>
+            <!--<td><a asp-controller="Job" asp-action="ViewJob" asp-route-id=@job.JobId>Details</a></td>-->
         </tr>
         }
     </tbody>

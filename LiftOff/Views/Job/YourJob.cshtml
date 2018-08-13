@@ -17,15 +17,17 @@
     <tbody>
         @foreach (var job in Model)
         {
-            <tr>
-                <td>@job.Name</td>
-                <td>@job.DatePosted</td>
-                <td>@job.Location</td>
-                <td>@job.PositionLevel</td>
-                <td>@job.PositionType</td>
-                <td>@job.Employer</td>
-                <td>@job.IsOpened</td>
-            </tr>
+        <tr>
+            <td>@job.Name</td>
+            <td>@job.DatePosted</td>
+            <td>@job.Location</td>
+            <td>@job.PositionLevel</td>
+            <td>@job.PositionType</td>
+            <td>@job.Employer</td>
+            <td>@job.IsOpened</td>
+            <td><a asp-controller="Job" asp-action="ViewJob" asp-route-id=@job.JobId>Details</a></td>
+            <td><a asp-controller="Job" asp-action="DeleteJob" asp-route-id=@job.JobId>Remove</a></td>
+        </tr>
         }
     </tbody>
 </table>
