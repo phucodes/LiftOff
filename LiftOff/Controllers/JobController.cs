@@ -35,7 +35,7 @@ namespace LiftOff.Controllers
         public IActionResult Add(AddJobViewModel addJobViewModel, List<string> RequirementNames, List<string> BenefitNames, List<string> TagNames)
         {
             if (ModelState.IsValid)
-            {   
+            {
                 // var currentUser = _userManager.GetUserName(HttpContext.User);
 
                 var currentUser = HttpContext.User.Identity.Name;
@@ -61,7 +61,7 @@ namespace LiftOff.Controllers
                 foreach (var item in RequirementNames)
                 {
                     //int currentId = newJob.JobId;
-                    
+
                     Requirement newRequirement = new Requirement()
                     {
                         RequirementName = item,
@@ -102,7 +102,7 @@ namespace LiftOff.Controllers
 
         [HttpGet]
         public IActionResult ViewJob(int id)
-        {   
+        {
             Job viewJob = context.Job.Find(id);
             AddJobViewModel currentJob = new AddJobViewModel
             {
@@ -136,6 +136,32 @@ namespace LiftOff.Controllers
             var currentUser = HttpContext.User.Identity;
             List<Job> jobs = context.Job.Where(job => job.Employer == currentUser.Name).ToList();
             return View(jobs);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Employer")]
+        public IActionResult DeleteJob(int id)
+        {
+            Job viewJob = context.Job.Find(id);
+            AddJobViewModel currentJob = new AddJobViewModel
+            {
+                Name = viewJob.Name,
+                DatePosted = viewJob.DatePosted,
+                Location = viewJob.Location
+            };
+
+            return View(viewJob);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Employer")]
+        public IActionResult Delete(int id)
+        {
+            Job viewJob = context.Job.SingleOrDefault(j => j.JobId == id);
+            context.Job.Remove(viewJob);
+            context.SaveChanges();
+
+            return RedirectToAction("YourJob");
         }
     }
 }
