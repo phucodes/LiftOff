@@ -104,7 +104,14 @@ namespace LiftOff.Controllers
         public IActionResult ViewJob(int id)
         {
             Job viewJob = context.Job.Find(id);
-            AddJobViewModel currentJob = new AddJobViewModel
+
+            List<Requirement> currentReq = context.Requirements.Where(j => j.JobId == id).ToList();
+
+            List<Benefit> currentBenefits = context.Benefits.Where(j => j.JobId == id).ToList();
+
+            List<Tag> currentTags = context.Tag.Where(j => j.JobId == id).ToList();
+
+            AddJobViewModel currentJobViewModel = new AddJobViewModel
             {
                 Name = viewJob.Name,
                 DatePosted = viewJob.DatePosted,
@@ -112,10 +119,13 @@ namespace LiftOff.Controllers
                 PositionType = viewJob.PositionType,
                 PositionLevel = viewJob.PositionLevel,
                 Description = viewJob.Description,
-                IsOpened = viewJob.IsOpened
+                RequirementNames = currentReq,
+                BenefitNames = currentBenefits,
+                TagNames = currentTags
+                // Employer = currentUser,
             };
 
-            return View(viewJob);
+            return View(currentJobViewModel);
         }
 
         // TODO: FINISH EDIT ACTIONS
@@ -162,6 +172,42 @@ namespace LiftOff.Controllers
             context.SaveChanges();
 
             return RedirectToAction("YourJob");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Employer")]
+        public IActionResult Edit (int id)
+        {
+            Job viewJob = context.Job.Find(id);
+
+            List<Requirement> currentRequirements = context.Requirements.Where(r => r.JobId == id).ToList();
+
+            List<Benefit> currentBenefits = context.Benefits.Where(j => j.JobId == id).ToList();
+
+            List<Tag> currentTags = context.Tag.Where(j => j.JobId == id).ToList();
+
+            AddJobViewModel currentJob = new AddJobViewModel
+            {
+                Name = viewJob.Name,
+                DatePosted = viewJob.DatePosted,
+                Location = viewJob.Location,
+                PositionType = viewJob.PositionType,
+                PositionLevel = viewJob.PositionLevel,
+                Description = viewJob.Description,
+                IsOpened = viewJob.IsOpened,
+                RequirementNames = currentRequirements,
+                BenefitNames = currentBenefits,
+                TagNames = currentTags
+            };
+
+            return View(currentJob);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Employer")]
+        public IActionResult Edit(int id, AddJobViewModel currentJob, List<string> RequirementNames, List<string> BenefitNames, List<string> TagNames)
+        {
+            return View();
         }
     }
 }
