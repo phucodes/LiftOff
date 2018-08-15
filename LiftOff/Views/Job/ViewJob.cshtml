@@ -1,4 +1,4 @@
-﻿@model LiftOff.Models.Job
+﻿@model LiftOff.Models.JobViewModels.AddJobViewModel
 
 <table class="table">
     <thead>
@@ -13,6 +13,9 @@
             {
                 <th scope="col">Availability</th>
             }
+            <th scope="col">Requirements</th>
+            <th scope="col">Benefits</th>
+            <th scope="col">Tag</th>
         </tr>
     </thead>
     <tbody>
@@ -22,13 +25,35 @@
             <td>@Model.Location</td>
             <td>@Model.PositionLevel</td>
             <td>@Model.PositionType</td>
-            <td>@Model.Employer</td>
+
             @if (User.IsInRole("Employer"))
             {
                 <td>@Model.IsOpened</td>
             }
-            </tr>
+        </tr>
     </tbody>
+
 </table>
+
+<ul>
+    @for (int i = 0; i < Model.RequirementNames.Count; i++)
+    {
+        <li>@Model.RequirementNames[i].RequirementName</li>
+    }
+</ul>
+
+<ul>
+    @for (int i = 0; i < Model.BenefitNames.Count; i++)
+    {
+        <li>@Model.BenefitNames[i].BenefitName</li>
+    }
+</ul>
+
+<ul>
+    @for (int i = 0; i < Model.TagNames.Count; i++)
+    {
+        <li>@Model.TagNames[i].TagName</li>
+    }
+</ul>
 
 <a asp-controller="Job" asp-action="Index">Return to index listing</a>

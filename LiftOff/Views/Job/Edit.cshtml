@@ -5,34 +5,60 @@
     <form asp-controller="Job" asp-action="Add" method="post">
         <div class="form-group">
             <label asp-for="Name"></label>
-            <input class="form-control" asp-for="Name" asp-placeholder-for="Name"/>
+            <input class="form-control" asp-for="Name" asp-placeholder-for="Name" />
             <span asp-validation-for="Name"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Location"></label>
-            <input class="form-control" asp-for="Location" asp-placeholder-for="Location"/>
+            <input class="form-control" asp-for="Location" asp-placeholder-for="Location" />
             <span asp-validation-for="Location"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="PositionType"></label>
-            <input class="form-control" asp-for="PositionType" asp-placeholder-for="PositionType"/>
+            <input class="form-control" asp-for="PositionType" asp-placeholder-for="PositionType" />
             <span asp-validation-for="PositionType"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="PositionLevel"></label>
-            <input class="form-control" asp-for="PositionLevel" asp-placeholder-for="PositionLevel"/>
+            <input class="form-control" asp-for="PositionLevel" asp-placeholder-for="PositionLevel" />
             <span asp-validation-for="PositionLevel"></span>
         </div>
 
         <div class="form-group">
             <label asp-for="Description"></label>
-            <input class="form-control" asp-for="Description" asp-placeholder-for="Description"/>
+            <input class="form-control" asp-for="Description" asp-placeholder-for="Description" />
             <span asp-validation-for="Description"></span>
         </div>
 
+        @for (int i = 0; i < Model.RequirementNames.Count; i++)
+        {
+            <div class="form-group col-md-6">
+                <label for="RequirementNames">Requirements</label>
+                <input class="form-control" id="RequirementNames" name="RequirementNames" value=@Model.RequirementNames[i].RequirementName type="text">
+                <span class="field-validation-valid" data-valmsg-for="RequirementNames" data-valmsg-replace="true"></span>
+            </div>
+        }
+
+        @for (int i = 0; i < Model.BenefitNames.Count; i++)
+        {
+            <div class="form-group col-md-6">
+                <label for="BenefitNames">Benefits</label>
+                <input class="form-control" id="BenefitNames" name="BenefitNames" value=@Model.BenefitNames[i].BenefitName type="text">
+                <span class="field-validation-valid" data-valmsg-for="BenefitNames" data-valmsg-replace="true"></span>
+            </div>
+        }
+
+        @for (int i = 0; i < Model.TagNames.Count; i++)
+        {
+            <div class="form-group col-md-6">
+                <label for="TagNames">Tags</label>
+                <input class="form-control" id="TagNames" name="TagNames" value=@Model.TagNames[i].TagName type="text">
+                <span class="field-validation-valid" data-valmsg-for="TagNames" data-valmsg-replace="true"></span>
+            </div>
+        }
         <input type="submit" value="Add Job" />
     </form>
 
