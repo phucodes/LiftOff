@@ -11,8 +11,8 @@ using System;
 namespace LiftOff.Migrations
 {
     [DbContext(typeof(JobDbContext))]
-    [Migration("20180811175936_BenefitsAdd")]
-    partial class BenefitsAdd
+    [Migration("20180815204640_Initials")]
+    partial class Initials
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,48 @@ namespace LiftOff.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("LiftOff.Models.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<int?>("JobId");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail");
+
+                    b.Property<string>("NormalizedUserName");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("ApplicationUser");
+                });
 
             modelBuilder.Entity("LiftOff.Models.Benefit", b =>
                 {
@@ -79,6 +121,29 @@ namespace LiftOff.Migrations
                     b.ToTable("Requirements");
                 });
 
+            modelBuilder.Entity("LiftOff.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("JobId");
+
+                    b.Property<string>("TagName");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("Tag");
+                });
+
+            modelBuilder.Entity("LiftOff.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("LiftOff.Models.Job")
+                        .WithMany("Applicants")
+                        .HasForeignKey("JobId");
+                });
+
             modelBuilder.Entity("LiftOff.Models.Benefit", b =>
                 {
                     b.HasOne("LiftOff.Models.Job")
@@ -91,6 +156,14 @@ namespace LiftOff.Migrations
                 {
                     b.HasOne("LiftOff.Models.Job")
                         .WithMany("Requirements")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("LiftOff.Models.Tag", b =>
+                {
+                    b.HasOne("LiftOff.Models.Job")
+                        .WithMany("Tags")
                         .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
