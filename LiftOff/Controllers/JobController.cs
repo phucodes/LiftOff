@@ -207,7 +207,31 @@ namespace LiftOff.Controllers
         [Authorize(Roles = "Employer")]
         public IActionResult Edit(int id, AddJobViewModel currentJob, List<string> RequirementNames, List<string> BenefitNames, List<string> TagNames)
         {
-            return View();
+            Job viewJob = context.Job.SingleOrDefault(j => j.JobId == id);
+
+            if (viewJob != null)
+            {
+                viewJob.Location = currentJob.Location;
+                viewJob.Name = currentJob.Name;
+                viewJob.PositionLevel = currentJob.PositionLevel;
+                viewJob.PositionType = currentJob.PositionType;
+                viewJob.Description = currentJob.Description;
+                context.SaveChanges();
+            }
+
+            List<Requirement> currentRequirements = context.Requirements.Where(r => r.JobId == id).ToList();
+
+            Dictionary<string, string> UpdateRequirements = new Dictionary<string, string>();
+
+            for(int i = 0; i < RequirementNames.Count; i++)
+            {
+                foreach(var item in currentRequirements)
+                {
+                    item.RequirementName = RequirementNames[i];
+                }
+            }
+
+            return RedirectToAction("ViewJob", new { id = viewJob.JobId });
         }
     }
 }
