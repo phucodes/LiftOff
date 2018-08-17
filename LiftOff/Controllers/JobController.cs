@@ -26,13 +26,17 @@ namespace LiftOff.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            AddJobViewModel addJobViewModel = new AddJobViewModel();
-            return View(addJobViewModel);
+            var model = new MultipleModel
+            {
+                AddJobViewModel = new AddJobViewModel(),
+                RequirementViewModel = new RequirementViewModel()
+            };
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(AddJobViewModel addJobViewModel, List<string> RequirementNames, List<string> BenefitNames, List<string> TagNames)
+        public IActionResult Add(MultipleModel multipleModel)//, List<string> BenefitNames, List<string> TagNames)
         {
             if (ModelState.IsValid)
             {
@@ -41,12 +45,12 @@ namespace LiftOff.Controllers
                 var currentUser = HttpContext.User.Identity.Name;
                 Job newJob = new Job()
                 {
-                    Name = addJobViewModel.Name,
+                    Name = multipleModel.AddJobViewModel.Name,
                     DatePosted = DateTime.UtcNow,
-                    Location = addJobViewModel.Location,
-                    PositionType = addJobViewModel.PositionType,
-                    PositionLevel = addJobViewModel.PositionLevel,
-                    Description = addJobViewModel.Description,
+                    Location = multipleModel.AddJobViewModel.Location,
+                    PositionType = multipleModel.AddJobViewModel.PositionType,
+                    PositionLevel = multipleModel.AddJobViewModel.PositionLevel,
+                    Description = multipleModel.AddJobViewModel.Description,
                     Employer = currentUser,
                     IsOpened = true,
                     //Requirement = addJobViewModel.Requirement
@@ -55,49 +59,57 @@ namespace LiftOff.Controllers
                 };
                 context.Job.Add(newJob);
                 context.SaveChanges();
-
-                int ReqNameLength = RequirementNames.Count();
-
-                foreach (var item in RequirementNames)
+                
+                Requirement newRequirement = new Requirement()
                 {
-                    //int currentId = newJob.JobId;
+                    RequirementName = multipleModel.RequirementViewModel.RequirementName,
+                    JobId = newJob.JobId
+                };
+                context.Requirements.Add(newRequirement);
+                context.SaveChanges();
 
-                    Requirement newRequirement = new Requirement()
-                    {
-                        RequirementName = item,
-                        JobId = newJob.JobId
-                    };
-                    context.Requirements.Add(newRequirement);
-                    context.SaveChanges();
-                }
+                //int ReqNameLength = RequirementNames.Count();
 
-                foreach (var item in BenefitNames)
-                {
-                    Benefit newBenefit = new Benefit()
-                    {
-                        BenefitName = item,
-                        JobId = newJob.JobId
-                    };
-                    context.Benefits.Add(newBenefit);
-                    context.SaveChanges();
-                }
+                //foreach (var item in RequirementNames)
+                //{
+                //    //int currentId = newJob.JobId;
 
-                foreach (var item in TagNames)
-                {
-                    Tag newTag = new Tag()
-                    {
-                        TagName = item,
-                        JobId = newJob.JobId
-                    };
-                    context.Tag.Add(newTag);
-                    context.SaveChanges();
-                }
+                //    Requirement newRequirement = new Requirement()
+                //    {
+                //        RequirementName = item,
+                //        JobId = newJob.JobId
+                //    };
+                //    context.Requirements.Add(newRequirement);
+                //    context.SaveChanges();
+                //}
+
+                //foreach (var item in BenefitNames)
+                //{
+                //    Benefit newBenefit = new Benefit()
+                //    {
+                //        BenefitName = item,
+                //        JobId = newJob.JobId
+                //    };
+                //    context.Benefits.Add(newBenefit);
+                //    context.SaveChanges();
+                //}
+
+                //foreach (var item in TagNames)
+                //{
+                //    Tag newTag = new Tag()
+                //    {
+                //        TagName = item,
+                //        JobId = newJob.JobId
+                //    };
+                //    context.Tag.Add(newTag);
+                //    context.SaveChanges();
+                //}
 
                 return RedirectToAction("ViewJob", new { id = newJob.JobId });
             }
 
             // If we get here, something's wrong and re-render the form
-            return View(addJobViewModel);
+            return View(multipleModel);
         }
 
         [HttpGet]
@@ -119,9 +131,9 @@ namespace LiftOff.Controllers
                 PositionType = viewJob.PositionType,
                 PositionLevel = viewJob.PositionLevel,
                 Description = viewJob.Description,
-                RequirementNames = currentReq,
-                BenefitNames = currentBenefits,
-                TagNames = currentTags
+                //RequirementNames = currentReq,
+                //BenefitNames = currentBenefits,
+                //TagNames = currentTags
                 // Employer = currentUser,
             };
 
@@ -176,7 +188,7 @@ namespace LiftOff.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Employer")]
-        public IActionResult Edit (int id)
+        public IActionResult Edit(int id)
         {
             Job viewJob = context.Job.Find(id);
 
@@ -195,9 +207,9 @@ namespace LiftOff.Controllers
                 PositionLevel = viewJob.PositionLevel,
                 Description = viewJob.Description,
                 IsOpened = viewJob.IsOpened,
-                RequirementNames = currentRequirements,
-                BenefitNames = currentBenefits,
-                TagNames = currentTags
+                //RequirementNames = currentRequirements,
+                //BenefitNames = currentBenefits,
+                //TagNames = currentTags
             };
 
             return View(currentJob);
@@ -223,15 +235,29 @@ namespace LiftOff.Controllers
 
             Dictionary<string, string> UpdateRequirements = new Dictionary<string, string>();
 
-            for(int i = 0; i < RequirementNames.Count; i++)
-            {
-                foreach(var item in currentRequirements)
-                {
-                    item.RequirementName = RequirementNames[i];
-                }
-            }
+            //for(int i = 0; i < RequirementNames.Count; i++)
+            //{
+            //    foreach(var item in currentRequirements)
+            //    {
+            //        item.RequirementName = RequirementNames[i];
+            //    }
+            //}
 
             return RedirectToAction("ViewJob", new { id = viewJob.JobId });
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public IActionResult Search(string searchKeyword)
+        //{
+
+        //}
     }
 }
