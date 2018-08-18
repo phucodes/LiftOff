@@ -1,8 +1,9 @@
 ﻿@model LiftOff.Models.JobViewModels.AddJobViewModel
 
 <div asp-validation-summary="All">
-
+    <h1 class="display-3">Add Job</h1>
     <form asp-controller="Job" asp-action="Add" method="post" id="item-list" class="form-row">
+
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="Name"></label>

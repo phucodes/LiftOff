@@ -1,5 +1,6 @@
 ﻿@model LiftOff.Models.JobViewModels.AddJobViewModel
 
+<h1>@Model.Name</h1>
 <table class="table">
     <thead>
         <tr>
@@ -36,23 +37,47 @@
 </table>
 
 <ul>
-    @for (int i = 0; i < Model.RequirementNames.Count; i++)
+    @if (Model.Requirements.Count == 0)
     {
-        <li>@Model.RequirementNames[i].RequirementName</li>
+       <p>No benefits yet</p>
+    }
+    else
+    {
+        @for (int i = 0; i < Model.Requirements.Count; i++)
+        {
+            <li>@Model.Requirements[i].RequirementName</li>
+        }
+    }
+
+
+</ul>
+
+<ul>
+    @if (Model.Benefits.Count == 0)
+    {
+        <p>No benefits yet</p>
+    }
+    else  
+    {
+        @for (int i = 0; i < Model.Benefits.Count; i++)
+        {
+            <li>@Model.Benefits[i].BenefitName</li>
+        }
     }
 </ul>
 
 <ul>
-    @for (int i = 0; i < Model.BenefitNames.Count; i++)
+    @if (Model.Tags.Count == 0)
     {
-        <li>@Model.BenefitNames[i].BenefitName</li>
+        <p>No tags yet</p>
     }
-</ul>
-
-<ul>
-    @for (int i = 0; i < Model.TagNames.Count; i++)
+    else
     {
-        <li>@Model.TagNames[i].TagName</li>
+
+        @for (int i = 0; i < Model.Tags.Count; i++)
+        {
+            <li>@Model.Tags[i].TagName</li>
+        }
     }
 </ul>
 

@@ -33,45 +33,38 @@
             <span asp-validation-for="Description"></span>
         </div>
 
-        @for (int i = 0; i < Model.Requirements.Count; i++)
-        {
-            @Html.EditorFor(item => Model.Requirements[i])
-            <br />
-        }
+        <div class="form-row col-md-12" id="require-tab">
 
-        @for (int i = 0; i < Model.Benefits.Count; i++)
-        {
-            @Html.EditorFor(item => Model.Benefits[i])
-            <br />
-        }
-
-        @*@for (int i = 0; i < requi.Count; i++)
-        {
             <div class="form-group col-md-6">
-                <label for="RequirementNames">Requirements</label>
-                <input class="form-control" id="RequirementNames" name="RequirementNames" value=@Model.RequirementNames[i].RequirementName type="text">
-                <span class="field-validation-valid" data-valmsg-for="RequirementNames" data-valmsg-replace="true"></span>
+                <a href="#" id="add">Add Requirements</a>
+                @for (int i = 0; i < Model.Requirements.Count; i++)
+                {
+                    <label asp-for="Requirements"></label>
+                    @Html.EditorFor(item => Model.Requirements[i].RequirementName, new { htmlAttributes = new { @class = "form-control" } })
+                    <br />
+                }
             </div>
-        }
+        </div>
 
-        @for (int i = 0; i < Model.BenefitNames.Count; i++)
-        {
-            <div class="form-group col-md-6">
-                <label for="BenefitNames">Benefits</label>
-                <input class="form-control" id="BenefitNames" name="BenefitNames" value=@Model.BenefitNames[i].BenefitName type="text">
-                <span class="field-validation-valid" data-valmsg-for="BenefitNames" data-valmsg-replace="true"></span>
+            <div class="form-group">
+                @for (int i = 0; i < Model.Benefits.Count; i++)
+                {
+                    <label asp-for="Benefits"></label>
+                    @Html.EditorFor(item => Model.Benefits[i].BenefitName, new { htmlAttributes = new { @class = "form-control" } })
+                    <br />
+                }
             </div>
-        }
 
-        @for (int i = 0; i < Model.TagNames.Count; i++)
-        {
-            <div class="form-group col-md-6">
-                <label for="TagNames">Tags</label>
-                <input class="form-control" id="TagNames" name="TagNames" value=@Model.TagNames[i].TagName type="text">
-                <span class="field-validation-valid" data-valmsg-for="TagNames" data-valmsg-replace="true"></span>
+            <div class="form-group">
+                @for (int i = 0; i < Model.Tags.Count; i++)
+                {
+                    <label asp-for="Tags"></label>
+                    @Html.EditorFor(item => Model.Tags[i].TagName, new { htmlAttributes = new { @class = "form-control" } })
+                    <br />
+                }
             </div>
-        }*@
-        <input type="submit" value="Add Job" />
+
+            <input type="submit" value="Add Job" />
     </form>
 
 </div>
