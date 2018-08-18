@@ -15,6 +15,7 @@ namespace LiftOff.Models.JobViewModels
         [Microsoft.AspNetCore.Mvc.HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
+        [Microsoft.AspNetCore.Mvc.HiddenInput(DisplayValue = false)]
         public int JobId { get; set; }
     }
 }
