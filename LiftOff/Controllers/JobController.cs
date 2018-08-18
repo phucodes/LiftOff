@@ -6,10 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using LiftOff.Models.JobViewModels;
-using LiftOff.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using LiftOff.Models;
 
 namespace LiftOff.Controllers
 {
@@ -23,65 +23,61 @@ namespace LiftOff.Controllers
             context = dbContext;
         }
 
+        public static List<RequirementViewModel> Requirements = new List<RequirementViewModel>();
+
+        public static List<BenefitViewModel> Benefits = new List<BenefitViewModel>();
+
         [HttpGet]
         public IActionResult Add()
         {
-            var model = new MultipleModel
-            {
-                AddJobViewModel = new AddJobViewModel(),
-                RequirementViewModel = new RequirementViewModel()
-            };
-            return View(model);
+
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(MultipleModel multipleModel)//, List<string> BenefitNames, List<string> TagNames)
+        public IActionResult Add(AddJobViewModel addJobViewModel, List<string> Requirements, List<string> Benefits)
         {
+
             if (ModelState.IsValid)
             {
-                // var currentUser = _userManager.GetUserName(HttpContext.User);
 
                 var currentUser = HttpContext.User.Identity.Name;
                 Job newJob = new Job()
-                {
-                    Name = multipleModel.AddJobViewModel.Name,
-                    DatePosted = DateTime.UtcNow,
-                    Location = multipleModel.AddJobViewModel.Location,
-                    PositionType = multipleModel.AddJobViewModel.PositionType,
-                    PositionLevel = multipleModel.AddJobViewModel.PositionLevel,
-                    Description = multipleModel.AddJobViewModel.Description,
+                {   
+                    Name = addJobViewModel.Name,
+                    DatePosted = DateTime.Now,
+                    Location = addJobViewModel.Location,
+                    PositionLevel = addJobViewModel.PositionLevel,
+                    PositionType = addJobViewModel.PositionType,
+                    Description = addJobViewModel.Description,
                     Employer = currentUser,
-                    IsOpened = true,
-                    //Requirement = addJobViewModel.Requirement
-                    //RequirementName = addJobViewModel.RequirementName,
-                    //ListRequirements = addJobViewModel.ListRequirements
+                    IsOpened = true
                 };
                 context.Job.Add(newJob);
                 context.SaveChanges();
-                
-                Requirement newRequirement = new Requirement()
+
+                foreach (var item in Requirements)
                 {
-                    RequirementName = multipleModel.RequirementViewModel.RequirementName,
-                    JobId = newJob.JobId
-                };
-                context.Requirements.Add(newRequirement);
-                context.SaveChanges();
+                    Requirement newRequirement = new Requirement()
+                    {
+                        RequirementName = item,
+                        JobId = newJob.JobId
+                    };
+                    context.Requirements.Add(newRequirement);
+                    context.SaveChanges();
+                }
 
-                //int ReqNameLength = RequirementNames.Count();
-
-                //foreach (var item in RequirementNames)
-                //{
-                //    //int currentId = newJob.JobId;
-
-                //    Requirement newRequirement = new Requirement()
-                //    {
-                //        RequirementName = item,
-                //        JobId = newJob.JobId
-                //    };
-                //    context.Requirements.Add(newRequirement);
-                //    context.SaveChanges();
-                //}
+                foreach(var item in Benefits)
+                {
+                    Benefit newBenefit = new Benefit()
+                    {
+                        BenefitName = item,
+                        JobId = newJob.JobId
+                    };
+                    context.Benefits.Add(newBenefit);
+                    context.SaveChanges();
+                }
 
                 //foreach (var item in BenefitNames)
                 //{
@@ -109,7 +105,7 @@ namespace LiftOff.Controllers
             }
 
             // If we get here, something's wrong and re-render the form
-            return View(multipleModel);
+            return View();
         }
 
         [HttpGet]
@@ -192,9 +188,31 @@ namespace LiftOff.Controllers
         {
             Job viewJob = context.Job.Find(id);
 
-            List<Requirement> currentRequirements = context.Requirements.Where(r => r.JobId == id).ToList();
+            List<Requirement> RequirementList = context.Requirements.Where(r => r.JobId == id).ToList();
 
-            List<Benefit> currentBenefits = context.Benefits.Where(j => j.JobId == id).ToList();
+            foreach (var item in RequirementList)
+            {
+                RequirementViewModel currentRequirementItem = new RequirementViewModel
+                {
+                    RequirementName = item.RequirementName,
+                    JobId = item.JobId,
+                    Id = item.Id
+                };
+                Requirements.Add(currentRequirementItem);
+            }
+
+            List<Benefit> BenefitList = context.Benefits.Where(b => b.JobId == id).ToList();
+
+            foreach (var item in BenefitList)
+            {
+                BenefitViewModel currentBenefitItems = new BenefitViewModel
+                {
+                    BenefitName = item.BenefitName,
+                    JobId = item.JobId,
+                    Id = item.Id
+                };
+                Benefits.Add(currentBenefitItems);
+            }
 
             List<Tag> currentTags = context.Tag.Where(j => j.JobId == id).ToList();
 
@@ -207,6 +225,8 @@ namespace LiftOff.Controllers
                 PositionLevel = viewJob.PositionLevel,
                 Description = viewJob.Description,
                 IsOpened = viewJob.IsOpened,
+                Requirements = Requirements,
+                Benefits = Benefits
                 //RequirementNames = currentRequirements,
                 //BenefitNames = currentBenefits,
                 //TagNames = currentTags
@@ -217,8 +237,12 @@ namespace LiftOff.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Employer")]
-        public IActionResult Edit(int id, AddJobViewModel currentJob, List<string> RequirementNames, List<string> BenefitNames, List<string> TagNames)
+        public IActionResult Edit(int id, AddJobViewModel currentJob)
         {
+            List<Requirement> RequirementList = context.Requirements.Where(r => r.JobId == id).ToList();
+
+            List<Benefit> BenefitList = context.Benefits.Where(b => b.JobId == id).ToList();
+
             Job viewJob = context.Job.SingleOrDefault(j => j.JobId == id);
 
             if (viewJob != null)
@@ -231,9 +255,7 @@ namespace LiftOff.Controllers
                 context.SaveChanges();
             }
 
-            List<Requirement> currentRequirements = context.Requirements.Where(r => r.JobId == id).ToList();
-
-            Dictionary<string, string> UpdateRequirements = new Dictionary<string, string>();
+            //Dictionary<string, string> UpdateRequirements = new Dictionary<string, string>();
 
             //for(int i = 0; i < RequirementNames.Count; i++)
             //{
