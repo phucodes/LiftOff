@@ -199,7 +199,7 @@ namespace LiftOff.Controllers
                     Id = item.Id
                 };
                 Requirements.Add(currentRequirementItem);
-            }
+            };
 
             List<Benefit> BenefitList = context.Benefits.Where(b => b.JobId == id).ToList();
 
@@ -239,12 +239,24 @@ namespace LiftOff.Controllers
         [Authorize(Roles = "Employer")]
         public IActionResult Edit(int id, AddJobViewModel currentJob)
         {
-            List<Requirement> RequirementList = context.Requirements.Where(r => r.JobId == id).ToList();
+            var viewJob = context.Job.FirstOrDefault(j => j.JobId == id);
 
-            List<Benefit> BenefitList = context.Benefits.Where(b => b.JobId == id).ToList();
+            List<Requirement> currentRequirements = context.Requirements.Where(r => r.JobId == id).ToList();
 
-            Job viewJob = context.Job.SingleOrDefault(j => j.JobId == id);
+            List<Requirement> newRequirements = new List<Requirement>();
 
+            foreach(var item in currentJob.Requirements)
+            {
+                foreach(var requirementItem in currentRequirements)
+                {
+                    if(item.Id == requirementItem.Id)
+                    {
+                        requirementItem.RequirementName = item.RequirementName;
+                        newRequirements.Add(requirementItem);
+                    }
+                }
+            }
+            
             if (viewJob != null)
             {
                 viewJob.Location = currentJob.Location;
@@ -252,6 +264,7 @@ namespace LiftOff.Controllers
                 viewJob.PositionLevel = currentJob.PositionLevel;
                 viewJob.PositionType = currentJob.PositionType;
                 viewJob.Description = currentJob.Description;
+                viewJob.Requirements = newRequirements;
                 context.SaveChanges();
             }
 
