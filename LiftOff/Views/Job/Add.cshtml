@@ -1,44 +1,51 @@
-﻿@model LiftOff.Models.JobViewModels.MultipleModel
+﻿@model LiftOff.Models.JobViewModels.AddJobViewModel
 
 <div asp-validation-summary="All">
 
     <form asp-controller="Job" asp-action="Add" method="post" id="item-list" class="form-row">
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="AddJobViewModel.Name"></label>
-                <input class="form-control" asp-for="AddJobViewModel.Name" />
-                <span asp-validation-for="AddJobViewModel.Name"></span>
+                <label asp-for="Name"></label>
+                <input class="form-control" asp-for="Name" />
+                <span asp-validation-for="Name"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="AddJobViewModel.Location"></label>
-                <input class="form-control" asp-for="AddJobViewModel.Location" />
-                <span asp-validation-for="AddJobViewModel.Location"></span>
+                <label asp-for="Location"></label>
+                <input class="form-control" asp-for="Location" />
+                <span asp-validation-for="Location"></span>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label asp-for="AddJobViewModel.PositionType"></label>
-                <input class="form-control" asp-for="AddJobViewModel.PositionType" />
-                <span asp-validation-for="AddJobViewModel.PositionType"></span>
+                <label asp-for="PositionType"></label>
+                <input class="form-control" asp-for="PositionType" />
+                <span asp-validation-for="PositionType"></span>
             </div>
 
             <div class="form-group col-md-6">
-                <label asp-for="AddJobViewModel.PositionLevel"></label>
-                <input class="form-control" asp-for="AddJobViewModel.PositionLevel" />
-                <span asp-validation-for="AddJobViewModel.PositionLevel"></span>
+                <label asp-for="PositionLevel"></label>
+                <input class="form-control" asp-for="PositionLevel" />
+                <span asp-validation-for="PositionLevel"></span>
             </div>
         </div>
         <div class="form-group col-md-12">
-            <label asp-for="AddJobViewModel.Description"></label>
-            <textarea class="form-control" asp-for="AddJobViewModel.Description"></textarea>
-            <span asp-validation-for="AddJobViewModel.Description"></span>
+            <label asp-for="Description"></label>
+            <textarea class="form-control" asp-for="Description"></textarea>
+            <span asp-validation-for="Description"></span>
         </div>
         <div class="form-row col-md-12" id="require-tab">
             <div class="form-group col-md-6">
-                <label asp-for="RequirementViewModel.RequirementName"></label><a href="#" id="add">Add Requirements</a>
-                <input class="form-control" asp-for="RequirementViewModel.RequirementName" />
-                <span asp-validation-for="RequirementViewModel.RequirementName"></span>
+                <label asp-for="Requirements"></label><a href="#" id="add">Add Requirements</a>
+                <input class="form-control" asp-for="Requirements" />
+                <span asp-validation-for="Requirements"></span>
+            </div>
+        </div>
+        <div class="form-row col-md-12" id="benefit-tab">
+            <div class="form-group col-md-6">
+                <label asp-for="Benefits"></label><a href="#" id="add-benefit">Add Benefits</a>
+                <input class="form-control" asp-for="Benefits" />
+                <span asp-validation-for="Benefits"></span>
             </div>
         </div>
         <!--
