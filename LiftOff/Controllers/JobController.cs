@@ -27,6 +27,8 @@ namespace LiftOff.Controllers
 
         public static List<BenefitViewModel> Benefits = new List<BenefitViewModel>();
 
+        public static List<TagViewModel> Tags = new List<TagViewModel>();
+
         [HttpGet]
         public IActionResult Add()
         {
@@ -36,7 +38,7 @@ namespace LiftOff.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(AddJobViewModel addJobViewModel, List<string> Requirements, List<string> Benefits)
+        public IActionResult Add(AddJobViewModel addJobViewModel, List<string> Requirements, List<string> Benefits, List<string> TagNames)
         {
 
             if (ModelState.IsValid)
@@ -66,7 +68,7 @@ namespace LiftOff.Controllers
                     };
                     context.Requirements.Add(newRequirement);
                     context.SaveChanges();
-                }
+                };
 
                 foreach(var item in Benefits)
                 {
@@ -77,29 +79,18 @@ namespace LiftOff.Controllers
                     };
                     context.Benefits.Add(newBenefit);
                     context.SaveChanges();
+                };
+
+                foreach (var item in TagNames)
+                {
+                    Tag newTag = new Tag()
+                    {
+                        TagName = item,
+                        JobId = newJob.JobId
+                    };
+                    context.Tag.Add(newTag);
+                    context.SaveChanges();
                 }
-
-                //foreach (var item in BenefitNames)
-                //{
-                //    Benefit newBenefit = new Benefit()
-                //    {
-                //        BenefitName = item,
-                //        JobId = newJob.JobId
-                //    };
-                //    context.Benefits.Add(newBenefit);
-                //    context.SaveChanges();
-                //}
-
-                //foreach (var item in TagNames)
-                //{
-                //    Tag newTag = new Tag()
-                //    {
-                //        TagName = item,
-                //        JobId = newJob.JobId
-                //    };
-                //    context.Tag.Add(newTag);
-                //    context.SaveChanges();
-                //}
 
                 return RedirectToAction("ViewJob", new { id = newJob.JobId });
             }
@@ -212,9 +203,20 @@ namespace LiftOff.Controllers
                     Id = item.Id
                 };
                 Benefits.Add(currentBenefitItems);
-            }
+            };
 
             List<Tag> currentTags = context.Tag.Where(j => j.JobId == id).ToList();
+
+            foreach (var item in currentTags)
+            {
+                TagViewModel CurrentTags = new TagViewModel
+                {
+                    TagName = item.TagName,
+                    JobId = item.JobId,
+                    Id = item.Id
+                };
+                Tags.Add(CurrentTags);
+            };
 
             AddJobViewModel currentJob = new AddJobViewModel
             {
@@ -226,7 +228,8 @@ namespace LiftOff.Controllers
                 Description = viewJob.Description,
                 IsOpened = viewJob.IsOpened,
                 Requirements = Requirements,
-                Benefits = Benefits
+                Benefits = Benefits,
+                Tags = Tags
                 //RequirementNames = currentRequirements,
                 //BenefitNames = currentBenefits,
                 //TagNames = currentTags
@@ -268,16 +271,6 @@ namespace LiftOff.Controllers
                 context.SaveChanges();
             }
 
-            //Dictionary<string, string> UpdateRequirements = new Dictionary<string, string>();
-
-            //for(int i = 0; i < RequirementNames.Count; i++)
-            //{
-            //    foreach(var item in currentRequirements)
-            //    {
-            //        item.RequirementName = RequirementNames[i];
-            //    }
-            //}
-
             return RedirectToAction("ViewJob", new { id = viewJob.JobId });
         }
 
@@ -287,12 +280,5 @@ namespace LiftOff.Controllers
         {
             return View();
         }
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public IActionResult Search(string searchKeyword)
-        //{
-
-        //}
     }
 }
