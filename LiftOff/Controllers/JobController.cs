@@ -23,12 +23,6 @@ namespace LiftOff.Controllers
             context = dbContext;
         }
 
-        public static List<RequirementViewModel> Requirements = new List<RequirementViewModel>();
-
-        public static List<BenefitViewModel> Benefits = new List<BenefitViewModel>();
-
-        public static List<TagViewModel> Tags = new List<TagViewModel>();
-
         [HttpGet]
         public IActionResult Add()
         {
@@ -104,11 +98,48 @@ namespace LiftOff.Controllers
         {
             Job viewJob = context.Job.Find(id);
 
-            List<Requirement> currentReq = context.Requirements.Where(j => j.JobId == id).ToList();
+            List<Requirement> RequirementList = context.Requirements.Where(r => r.JobId == id).ToList();
 
-            List<Benefit> currentBenefits = context.Benefits.Where(j => j.JobId == id).ToList();
+            List<RequirementViewModel> Requirements = new List<RequirementViewModel>();
+            List<BenefitViewModel> Benefits = new List<BenefitViewModel>();
+            List<TagViewModel> Tags = new List<TagViewModel>();
+
+            foreach (var item in RequirementList)
+            {
+                RequirementViewModel currentRequirementItem = new RequirementViewModel
+                {
+                    RequirementName = item.RequirementName,
+                    JobId = item.JobId,
+                    Id = item.Id
+                };
+                Requirements.Add(currentRequirementItem);
+            };
+
+            List<Benefit> BenefitList = context.Benefits.Where(b => b.JobId == id).ToList();
+
+            foreach (var item in BenefitList)
+            {
+                BenefitViewModel currentBenefitItems = new BenefitViewModel
+                {
+                    BenefitName = item.BenefitName,
+                    JobId = item.JobId,
+                    Id = item.Id
+                };
+                Benefits.Add(currentBenefitItems);
+            };
 
             List<Tag> currentTags = context.Tag.Where(j => j.JobId == id).ToList();
+
+            foreach (var item in currentTags)
+            {
+                TagViewModel CurrentTags = new TagViewModel
+                {
+                    TagName = item.TagName,
+                    JobId = item.JobId,
+                    Id = item.Id
+                };
+                Tags.Add(CurrentTags);
+            };
 
             AddJobViewModel currentJobViewModel = new AddJobViewModel
             {
@@ -118,10 +149,9 @@ namespace LiftOff.Controllers
                 PositionType = viewJob.PositionType,
                 PositionLevel = viewJob.PositionLevel,
                 Description = viewJob.Description,
-                //RequirementNames = currentReq,
-                //BenefitNames = currentBenefits,
-                //TagNames = currentTags
-                // Employer = currentUser,
+                Requirements = Requirements,
+                Benefits = Benefits,
+                Tags = Tags
             };
 
             return View(currentJobViewModel);
@@ -178,6 +208,10 @@ namespace LiftOff.Controllers
         public IActionResult Edit(int id)
         {
             Job viewJob = context.Job.Find(id);
+
+            List<RequirementViewModel> Requirements = new List<RequirementViewModel>();
+            List<BenefitViewModel> Benefits = new List<BenefitViewModel>();
+            List<TagViewModel> Tags = new List<TagViewModel>();
 
             List<Requirement> RequirementList = context.Requirements.Where(r => r.JobId == id).ToList();
 
@@ -240,7 +274,7 @@ namespace LiftOff.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Employer")]
-        public IActionResult Edit(int id, AddJobViewModel currentJob)
+        public IActionResult Edit(int id, AddJobViewModel currentJob, List<string> Requirements)
         {
             var viewJob = context.Job.FirstOrDefault(j => j.JobId == id);
 
@@ -258,8 +292,40 @@ namespace LiftOff.Controllers
                         newRequirements.Add(requirementItem);
                     }
                 }
-            }
-            
+            };
+
+            List<Benefit> currentBenefits = context.Benefits.Where(r => r.JobId == id).ToList();
+
+            List<Benefit> newBenefits = new List<Benefit>();
+
+            foreach (var item in currentJob.Benefits)
+            {
+                foreach (var benefitItem in currentBenefits)
+                {
+                    if (item.Id == benefitItem.Id)
+                    {
+                        benefitItem.BenefitName = item.BenefitName;
+                        newBenefits.Add(benefitItem);
+                    }
+                }
+            };
+
+            //List<Tag> currentTags = context.Tag.Where(t => t.JobId == id).ToList();
+
+            //List<Tag> newTags = new List<Tag>();
+
+            //foreach(var item in currentJob.Tags)
+            //{
+            //    foreach(var tagItem in currentTags)
+            //    {
+            //        if(item.Id == tagItem.Id)
+            //        {
+            //            tagItem.TagName = item.TagName;
+            //            newTags.Add(tagItem);
+            //        }
+            //    }
+            //};
+
             if (viewJob != null)
             {
                 viewJob.Location = currentJob.Location;
@@ -268,8 +334,10 @@ namespace LiftOff.Controllers
                 viewJob.PositionType = currentJob.PositionType;
                 viewJob.Description = currentJob.Description;
                 viewJob.Requirements = newRequirements;
+                viewJob.Benefits = newBenefits;
+                //viewJob.Tags = newTags;
                 context.SaveChanges();
-            }
+            };
 
             return RedirectToAction("ViewJob", new { id = viewJob.JobId });
         }
