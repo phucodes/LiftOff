@@ -35,8 +35,12 @@ namespace LiftOff.Models.JobViewModels
 
         public bool IsOpened { get; set; }
         
-        [Display(Name = "Requirements", Prompt = "Requirement")]
-        public List<RequirementViewModel> RequirementNames { get; set; }
+        public List<RequirementViewModel> Requirements { get; set; }
+
+        public List<BenefitViewModel> Benefits { get; set; }
+
+        //[Display(Name = "Requirements", Prompt = "Requirement")]
+        //public List<RequirementViewModel> RequirementNames { get; set; }
 
         /*
         [Required]
@@ -48,10 +52,5 @@ namespace LiftOff.Models.JobViewModels
         public List<Tag> TagNames { get; set; }
         */
     }
-
-    public class MultipleModel
-    {
-        public AddJobViewModel AddJobViewModel { get; set; }
-        public RequirementViewModel RequirementViewModel { get; set; }
-    }
+    
 }
