@@ -39,18 +39,7 @@ namespace LiftOff.Models.JobViewModels
 
         public List<BenefitViewModel> Benefits { get; set; }
 
-        //[Display(Name = "Requirements", Prompt = "Requirement")]
-        //public List<RequirementViewModel> RequirementNames { get; set; }
-
-        /*
-        [Required]
-        [Display(Name = "Benefits", Prompt = "Benefit")]
-        public List<Benefit> BenefitNames { get; set; }
-
-        [Required]
-        [Display(Name = "Add Tags", Prompt = "Tag")]
-        public List<Tag> TagNames { get; set; }
-        */
+        public List<TagViewModel> Tags { get; set; }
     }
     
 }
