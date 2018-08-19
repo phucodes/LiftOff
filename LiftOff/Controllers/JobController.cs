@@ -26,10 +26,9 @@ namespace LiftOff.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-
-            return View();
+            AddJobViewModel addJobViewModel = new AddJobViewModel();
+            return View(addJobViewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Add(AddJobViewModel addJobViewModel, List<string> Requirements, List<string> Benefits, List<string> TagNames)
@@ -264,9 +263,6 @@ namespace LiftOff.Controllers
                 Requirements = Requirements,
                 Benefits = Benefits,
                 Tags = Tags
-                //RequirementNames = currentRequirements,
-                //BenefitNames = currentBenefits,
-                //TagNames = currentTags
             };
 
             return View(currentJob);
@@ -342,11 +338,14 @@ namespace LiftOff.Controllers
             return RedirectToAction("ViewJob", new { id = viewJob.JobId });
         }
 
-        [HttpGet]
+        [HttpPost]
         [AllowAnonymous]
-        public IActionResult Search()
+        public IActionResult Search(SearchViewModel searchViewModel)
         {
-            return View();
+            List<Job> matchedJobs = context.Job.Where(j => j.Name.Contains(searchViewModel.SearchString)).ToList();
+
+            return View(matchedJobs);
         }
+        
     }
 }
