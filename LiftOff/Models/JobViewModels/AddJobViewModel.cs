@@ -34,12 +34,16 @@ namespace LiftOff.Models.JobViewModels
         public DateTime DatePosted { get; set; }
 
         public bool IsOpened { get; set; }
+
+        public List<ApplicationUser> Applicants { get; set; }
         
         public List<RequirementViewModel> Requirements { get; set; }
 
         public List<BenefitViewModel> Benefits { get; set; }
 
         public List<TagViewModel> Tags { get; set; }
+
+        public int JobId { get; set; }
     }
     
 }

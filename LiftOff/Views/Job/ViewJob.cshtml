@@ -81,4 +81,10 @@
     }
 </ul>
 
+@if (User.IsInRole("User"))
+{
+<form asp-controller="Job" asp-action="Apply" method="post" asp-route-id=@Model.JobId>
+    <input type="submit" value="Apply for this job"/>
+</form>
+}
 <a asp-controller="Job" asp-action="Index">Return to index listing</a>

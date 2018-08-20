@@ -13,17 +13,21 @@ using LiftOff.Models;
 
 namespace LiftOff.Controllers
 {
-    [Authorize(Roles = "Employer")]
     public class JobController : Controller
     {
         private JobDbContext context;
 
-        public JobController(JobDbContext dbContext)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+
+        public JobController(JobDbContext dbContext, UserManager<ApplicationUser> userManager)
         {
             context = dbContext;
+            _userManager = userManager;
         }
 
         [HttpGet]
+        [Authorize(Roles = "Employer")]
         public IActionResult Add()
         {
             AddJobViewModel addJobViewModel = new AddJobViewModel();
@@ -31,6 +35,7 @@ namespace LiftOff.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Employer")]
         public IActionResult Add(AddJobViewModel addJobViewModel, List<string> Requirements, List<string> Benefits, List<string> TagNames)
         {
 
@@ -93,6 +98,7 @@ namespace LiftOff.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult ViewJob(int id)
         {
             Job viewJob = context.Job.Find(id);
@@ -150,7 +156,8 @@ namespace LiftOff.Controllers
                 Description = viewJob.Description,
                 Requirements = Requirements,
                 Benefits = Benefits,
-                Tags = Tags
+                Tags = Tags,
+                JobId = viewJob.JobId
             };
 
             return View(currentJobViewModel);
@@ -346,6 +353,31 @@ namespace LiftOff.Controllers
 
             return View(matchedJobs);
         }
-        
+
+        [HttpPost]
+        [Authorize(Roles = "User")]
+        public IActionResult Apply(int id, ApplicationUser applicationUser, AddJobViewModel viewJob)
+        {
+            string currentUser = HttpContext.User.Identity.Name;
+
+            string currentId = _userManager.GetUserId(User);
+
+            ApplicationUser matchedUser = _userManager.Users.FirstOrDefault(u => u.Id == currentId);
+
+            List<ApplicationUser> applicantList = new List<ApplicationUser>
+            {
+                matchedUser
+            };
+
+            if (viewJob != null)
+            {
+                viewJob.Applicants = applicantList;
+                context.SaveChanges();
+            };
+
+            return Redirect("/Job");
+
+        }
+
     }
 }

@@ -16,6 +16,8 @@ namespace LiftOff.Data
 
         }
 
+        public DbSet<ApplicationUser> ApplicationUsers {get;set;}
+
         // public DbSet<Job> Job { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
