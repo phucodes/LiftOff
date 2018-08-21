@@ -1,6 +1,8 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 /* Wrapping element */
@@ -32,4 +34,101 @@
     .carousel-caption {
         display: none;
     }
+}
+
+.job-view,
+.search-view {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.search-form {
+    width: 100%;
+}
+
+.search-box {
+    width: 95%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #424242;
+    margin: 20px 0;
+    transition: 0.3s ease-in-out;
+}
+
+.form-subblock input:focus,
+.search-box:focus {
+    border-color: rgba(126, 239, 104, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6);
+    outline: 0 none;
+}
+
+.search-button {
+    background: white;
+    border: 1px solid #424242;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+    padding: 5px;
+}
+
+.search-button:hover {
+    background: #424242;
+    color: white;
+}
+
+.job-view h1,
+.heading-search {
+    margin: 30px 0;
+    width: 100%;
+}
+
+.form-block {
+    width: 70%;
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-subblock:nth-of-type(odd) {
+    margin-right: 10px;
+}
+
+.form-subblock {
+    margin: 5px 0;
+    width: calc(50% - 5px);
+}
+
+.form-subblock input {
+    width: 100%;
+    transition: 0.3s ease-in-out;
+}
+
+.form-block textarea {
+    width: 150%;
+}
+
+.form-block h1,
+.form-block input {
+    width: 100%;
+}
+
+.add-button {
+    width: 100%;
+}
+
+.add-button input {
+    margin: 20px 45%;
+    color: #424242;
+    background-color: white;
+
+    border: 1px solid #424242;
+    border-radius: 25px;
+    padding: 10px 45px;
+    transition: 0.3s ease-in-out;
+}
+
+.add-button input:hover {
+    color: white;
+    background-color: #424242;
+    border: 1px solid white;
 }

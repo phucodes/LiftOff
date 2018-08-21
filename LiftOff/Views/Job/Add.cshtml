@@ -2,80 +2,65 @@
 
 <div asp-validation-summary="All">
     <h1 class="display-3">Add Job</h1>
-    <form asp-controller="Job" asp-action="Add" method="post" id="item-list" class="form-row">
+    <form asp-controller="Job" asp-action="Add" method="post" id="item-list" class="job-view">
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="Name"></label>
-                <input class="form-control" asp-for="Name" />
-                <span asp-validation-for="Name"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Location"></label>
-                <input class="form-control" asp-for="Location" />
-                <span asp-validation-for="Location"></span>
-            </div>
+        <div class="form-block">
+            <label asp-for="Name"></label>
+            <input class="form-control" asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-block">
+            <label asp-for="Location"></label>
+            <input class="form-control" asp-for="Location" />
+            <span asp-validation-for="Location"></span>
         </div>
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="PositionType"></label>
-                <input class="form-control" asp-for="PositionType" />
-                <span asp-validation-for="PositionType"></span>
-            </div>
-
-            <div class="form-group col-md-6">
-                <label asp-for="PositionLevel"></label>
-                <input class="form-control" asp-for="PositionLevel" />
-                <span asp-validation-for="PositionLevel"></span>
-            </div>
+        <div class="form-block">
+            <label asp-for="PositionType"></label>
+            <input class="form-control" asp-for="PositionType" />
+            <span asp-validation-for="PositionType"></span>
         </div>
-        <div class="form-group col-md-12">
+
+        <div class="form-block">
+            <label asp-for="PositionLevel"></label>
+            <input class="form-control" asp-for="PositionLevel" />
+            <span asp-validation-for="PositionLevel"></span>
+        </div>
+
+        <div class="form-block">
             <label asp-for="Description"></label>
             <textarea class="form-control" asp-for="Description"></textarea>
             <span asp-validation-for="Description"></span>
         </div>
-        <div class="form-row col-md-12" id="require-tab">
-            <div class="form-group col-md-6">
-                <label asp-for="Requirements"></label><a href="#" id="add">Add Requirements</a>
-                <input class="form-control" asp-for="Requirements" />
+
+        <div class="form-block" id="require-tab">
+            <div class="form-subblock">
+                <label asp-for="Requirements"><a href="#" id="add">Add Requirements</a></label>
+                <input class="form-control" asp-for="Requirements" placeholder="Requirement" />
                 <span asp-validation-for="Requirements"></span>
             </div>
         </div>
-        <div class="form-row col-md-12" id="benefit-tab">
-            <div class="form-group col-md-6">
-                <label asp-for="Benefits"></label><a href="#" id="add-benefit">Add Benefits</a>
-                <input class="form-control" asp-for="Benefits" />
+
+        <div class="form-block" id="benefit-tab">
+            <div class="form-subblock">
+                <label asp-for="Benefits"><a href="#" id="add-benefit">Add Benefits</a></label>
+                <input class="form-control" asp-for="Benefits" placeholder="Benefit"/>
                 <span asp-validation-for="Benefits"></span>
             </div>
         </div>
 
 
-        <div class="form-row col-md-12" id="tag-tab">
-            <div class="form-group col-md-6">
-                <label asp-for="Tags"></label><a href="#" id="add-tag">Add Tags</a>
-                <input class="form-control" asp-for="Tags" />
+        <div class="form-block" id="tag-tab">
+            <div class="form-subblock">
+                <label asp-for="Tags"><a href="#" id="add-tag">Add Tags</a></label>
+                <input class="form-control" asp-for="Tags" placeholder="Tag"/>
                 <span asp-validation-for="Tags"></span>
             </div>
         </div>
-        <!--
-    <div class="form-row col-md-12" id="benefit-tab">
-        <div class="form-group col-md-6">
-            <label asp-for="BenefitNames"></label><a href="#" id="add-benefit">Add Benefits</a>
-            <input class="form-control" asp-for="BenefitNames" />
-            <span asp-validation-for="BenefitNames"></span>
-        </div>
-    </div>
-    <div class="form-row col-md-12" id="tag-tab">
-        <div class="form-group col-md-6">
-            <label asp-for="TagNames"></label><a href="#" id="add-tag">Add Tags</a>
-            <input class="form-control" asp-for="TagNames" />
-            <span asp-validation-for="TagNames"></span>
-        </div>
-    </div>
-        -->
 
-        <input type="submit" value="Add Job" class="form-group col-md-12" />
-    </form>
+        <div class="add-button">
+            <input type="submit" value="Add Job"/>
+        </div>
+</form>
 
 </div>

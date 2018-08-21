@@ -72,7 +72,6 @@
     @RenderSection("Scripts", required: false)
     <script type="text/javascript">
 
-
         // For dynamic Requirement inputs
         $(document).ready(function () {
             $(function () {
@@ -80,14 +79,22 @@
                 $("#add").click(function (e) {
                     e.preventDefault();
                     var i = $("#require-tab").length;
-                    var n = `        <div class="form-group col-md-6">
-                        <label for="Requirements">Requirements</label>
-                        <input class="form-control" id="Requirements" name="Requirements" value="" type="text">
+                    var n = `        <div class="form-subblock remove">
+                        <label for="Requirements"><a href="#" id="remove">Remove this requirement</a></label>
+                        <input class="form-control" id="Requirements" name="Requirements" value="" type="text" placeholder="Requirements">
                         <span class="field-validation-valid" data-valmsg-for="Requirements" data-valmsg-replace="true"></span>
                             </div>`;
                     $("#require-tab").append(n);
                 });
+            });
 
+            $(function () {
+
+                $("#remove").click(function (e) {
+                    e.preventDefault();
+                    console.log("clicked");
+                    $(".form-subblock remove").remove();
+                });
             });
 
             // For dynamic Benefit inputs
@@ -96,7 +103,7 @@
                 $("#add-benefit").click(function (e) {
                     e.preventDefault();
                     var i = $("#benefit-tab").length;
-                    var n = `        <div class="form-group col-md-6">
+                    var n = `        <div class="form-subblock">
                         <label for="Benefits">Benefits</label>
                         <input class="form-control" id="Benefits" name="Benefits" value="" type="text" placeholder="Benefit">
                         <span class="field-validation-valid" data-valmsg-for="Benefits" data-valmsg-replace="true"></span>
@@ -111,13 +118,13 @@
 
                 $("#add-tag").click(function (e) {
                     e.preventDefault();
-                    var i = $("#items").length;
-                    var n = `        <div class="form-group col-md-6">
+                    var i = $("#tag-tab").length;
+                    var n = `        <div class="form-subblock">
                         <label for="TagNames">TagNames</label>
                         <input class="form-control" id="TagNames" name="TagNames" value="" type="text" placeholder="Tag">
                         <span class="field-validation-valid" data-valmsg-for="TagNames" data-valmsg-replace="true"></span>
                             </div>`;
-                    $("#item-list").append(n);
+                    $("#tag-tab").append(n);
                 });
 
             });

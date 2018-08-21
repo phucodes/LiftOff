@@ -5,17 +5,16 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<h1>Search</h1>
+<h1 class="heading-search">Search Openings</h1>
 
 <div asp-validation-summary="All">
-    <form asp-controller="Job" asp-action="Search" method="post" class="form-row">
-        <div class="form-row">
-            <label asp-for="SearchString">Search openings</label>
-            <input class="form-control" asp-for="SearchString" />
+    <div class="search-view">
+        <form asp-controller="Job" asp-action="Search" method="post" class="search-form">
+            <input class="search-box" asp-for="SearchString" />
             <span asp-validation-for="SearchString"></span>
-            <input type="submit" values="Search" />
-        </div>
-    </form>
+            <input class="search-button" type="submit" values="Search" />
+        </form>
+    </div>
 </div>
 <h2>Or View List</h2>
 <p><a asp-controller="Job" asp-action="Index">View List of Jobs</a></p>
