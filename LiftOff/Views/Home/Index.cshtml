@@ -11,7 +11,7 @@
     <form asp-controller="Job" asp-action="Search" method="post" class="form-row">
         <div class="form-row">
             <label asp-for="SearchString">Search openings</label>
-            <input class="form-control" asp-for="SearchString"/>
+            <input class="form-control" asp-for="SearchString" />
             <span asp-validation-for="SearchString"></span>
             <input type="submit" values="Search" />
         </div>
@@ -20,7 +20,12 @@
 <h2>Or View List</h2>
 <p><a asp-controller="Job" asp-action="Index">View List of Jobs</a></p>
 
-@if (SignInManager.IsSignedIn(User))
+@if (User.IsInRole("Employer"))
 {
     <p><a asp-controller="Job" asp-action="YourJob">View Your List of Openings</a></p>
+}
+
+@if (User.IsInRole("User"))
+{
+    <p>View List of Jobs You Have Applied to</p>
 }

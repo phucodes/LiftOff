@@ -35,7 +35,7 @@ namespace LiftOff.Models.JobViewModels
 
         public bool IsOpened { get; set; }
 
-        public List<ApplicationUser> Applicants { get; set; }
+        public List<ApplicantViewModel> Applicants { get; set; }
         
         public List<RequirementViewModel> Requirements { get; set; }
 

@@ -108,6 +108,7 @@ namespace LiftOff.Controllers
             List<RequirementViewModel> Requirements = new List<RequirementViewModel>();
             List<BenefitViewModel> Benefits = new List<BenefitViewModel>();
             List<TagViewModel> Tags = new List<TagViewModel>();
+            List<ApplicantViewModel> Applicants = new List<ApplicantViewModel>();
 
             foreach (var item in RequirementList)
             {
@@ -146,6 +147,20 @@ namespace LiftOff.Controllers
                 Tags.Add(CurrentTags);
             };
 
+            List<Applicant> currentApplicants = context.Applicants.Where(a => a.JobId == id).ToList();
+
+            foreach(var item in currentApplicants)
+            {
+                var matchedApplicants = context.Applicants.FirstOrDefault(a => a.Id == item.Id);
+                ApplicantViewModel CurrentApplicants = new ApplicantViewModel
+                {
+                    UserId = matchedApplicants.UserId,
+                    JobId = item.JobId,
+                    Name = matchedApplicants.Name
+                };
+                Applicants.Add(CurrentApplicants);
+            }
+
             AddJobViewModel currentJobViewModel = new AddJobViewModel
             {
                 Name = viewJob.Name,
@@ -157,6 +172,7 @@ namespace LiftOff.Controllers
                 Requirements = Requirements,
                 Benefits = Benefits,
                 Tags = Tags,
+                Applicants = Applicants,
                 JobId = viewJob.JobId
             };
 
@@ -313,21 +329,21 @@ namespace LiftOff.Controllers
                 }
             };
 
-            //List<Tag> currentTags = context.Tag.Where(t => t.JobId == id).ToList();
+            List<Tag> currentTags = context.Tag.Where(t => t.JobId == id).ToList();
 
-            //List<Tag> newTags = new List<Tag>();
+            List<Tag> newTags = new List<Tag>();
 
-            //foreach(var item in currentJob.Tags)
-            //{
-            //    foreach(var tagItem in currentTags)
-            //    {
-            //        if(item.Id == tagItem.Id)
-            //        {
-            //            tagItem.TagName = item.TagName;
-            //            newTags.Add(tagItem);
-            //        }
-            //    }
-            //};
+            foreach (var item in currentJob.Tags)
+            {
+                foreach (var tagItem in currentTags)
+                {
+                    if (item.Id == tagItem.Id)
+                    {
+                        tagItem.TagName = item.TagName;
+                        newTags.Add(tagItem);
+                    }
+                }
+            };
 
             if (viewJob != null)
             {
@@ -338,7 +354,7 @@ namespace LiftOff.Controllers
                 viewJob.Description = currentJob.Description;
                 viewJob.Requirements = newRequirements;
                 viewJob.Benefits = newBenefits;
-                //viewJob.Tags = newTags;
+                viewJob.Tags = newTags;
                 context.SaveChanges();
             };
 
@@ -362,21 +378,17 @@ namespace LiftOff.Controllers
 
             string currentId = _userManager.GetUserId(User);
 
-            ApplicationUser matchedUser = _userManager.Users.FirstOrDefault(u => u.Id == currentId);
-
-            List<ApplicationUser> applicantList = new List<ApplicationUser>
+            Applicant newApplicant = new Applicant
             {
-                matchedUser
+                UserId = currentId,
+                JobId = id,
+                Name = currentUser
             };
 
-            if (viewJob != null)
-            {
-                viewJob.Applicants = applicantList;
-                context.SaveChanges();
-            };
+            context.Applicants.Add(newApplicant);
+            context.SaveChanges();
 
             return Redirect("/Job");
-
         }
 
     }

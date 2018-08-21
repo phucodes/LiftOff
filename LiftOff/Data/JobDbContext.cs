@@ -20,6 +20,8 @@ namespace LiftOff.Data
         
         public DbSet<Tag> Tag { get; set; }
 
+        public DbSet<Applicant> Applicants { get; set; }
+
         public JobDbContext(DbContextOptions<JobDbContext> options) : base(options)
         { }
 
