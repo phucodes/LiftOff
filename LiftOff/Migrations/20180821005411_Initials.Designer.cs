@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace LiftOff.Migrations.ApplicationDb
+namespace LiftOff.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180811153728_UserInit")]
-    partial class UserInit
+    [Migration("20180821005411_Initials")]
+    partial class Initials
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

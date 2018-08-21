@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 
-namespace LiftOff.Migrations.ApplicationDb
+namespace LiftOff.Migrations
 {
-    public partial class UserInit : Migration
+    public partial class Initials : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
