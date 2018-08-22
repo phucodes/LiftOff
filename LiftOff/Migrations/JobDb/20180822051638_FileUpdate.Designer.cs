@@ -11,9 +11,10 @@ using System;
 namespace LiftOff.Migrations.JobDb
 {
     [DbContext(typeof(JobDbContext))]
-    partial class JobDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180822051638_FileUpdate")]
+    partial class FileUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,8 +107,6 @@ namespace LiftOff.Migrations.JobDb
                     b.Property<string>("FilePath");
 
                     b.Property<string>("UserId");
-
-                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 

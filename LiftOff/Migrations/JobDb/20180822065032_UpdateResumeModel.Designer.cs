@@ -11,9 +11,10 @@ using System;
 namespace LiftOff.Migrations.JobDb
 {
     [DbContext(typeof(JobDbContext))]
-    partial class JobDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180822065032_UpdateResumeModel")]
+    partial class UpdateResumeModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
