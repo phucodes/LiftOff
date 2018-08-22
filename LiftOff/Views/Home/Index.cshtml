@@ -26,5 +26,5 @@
 
 @if (User.IsInRole("User"))
 {
-    <p>View List of Jobs You Have Applied to</p>
+    <a asp-controller="Job" asp-action="Apply">List of Jobs You Have Applied to</a>
 }

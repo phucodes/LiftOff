@@ -1,0 +1,17 @@
+﻿@using LiftOff.Models;
+
+<div class="search-view">
+    <h1>@Model.Count Result(s)</h1>
+
+    @foreach (var job in Model)
+    {
+        <div class="card-tag">
+            <h2><a asp-controller="Job" asp-action="ViewJob" asp-route-id=@job.JobId>@job.Name</a></h2>
+            <p>@job.Employer</p>
+            <p>@job.DatePosted</p>
+            <p>@job.Location</p>
+            <p>@job.PositionType</p>
+            <p>@job.PositionLevel</p>
+        </div>
+    }
+</div>

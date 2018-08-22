@@ -22,6 +22,8 @@ namespace LiftOff.Data
 
         public DbSet<Applicant> Applicants { get; set; }
 
+        public DbSet<ResumeFile> Resume { get; set; }
+
         public JobDbContext(DbContextOptions<JobDbContext> options) : base(options)
         { }
 

@@ -1,99 +1,99 @@
 ﻿@model LiftOff.Models.JobViewModels.AddJobViewModel
 
-<h1>@Model.Name</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Date Posted</th>
-            <th scope="col">Location</th>
-            <th scope="col">Position Level</th>
-            <th scope="col">Position Type</th>
-            <th scope="col">Employer</th>
-            @if (User.IsInRole("Employer"))
+<div class="view-wrapper">
+    <h1>@Model.Name</h1>
+
+    <h2>Details</h2>
+
+    <div class="main-wrapper">
+        <div class="table-flex">Name: </div>
+        <div class="table-flex">@Model.Name</div>
+
+        <div class="table-flex">Date Posted: </div>
+        <div class="table-flex">@Model.DatePosted</div>
+
+        <div class="table-flex">Location: </div>
+        <div class="table-flex">@Model.Location</div>
+
+        <div class="table-flex">Employer: </div>
+        <div class="table-flex">@Model.Employer</div>
+
+        <div class="table-flex">Position Level: </div>
+        <div class="table-flex">@Model.PositionLevel</div>
+
+        <div class="table-flex">Position Type: </div>
+        <div class="table-flex">@Model.PositionType</div>
+    </div>
+
+    <h2>Requirements</h2>
+    <div class="main-wrapper">
+        <ul class="table">
+            @if (Model.Requirements.Count == 0)
             {
-                <th scope="col">Availability</th>
+                <p>No benefits yet</p>
             }
-            <th scope="col">Requirements</th>
-            <th scope="col">Benefits</th>
-            <th scope="col">Tag</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>@Model.Name</td>
-            <td>@Model.DatePosted</td>
-            <td>@Model.Location</td>
-            <td>@Model.PositionLevel</td>
-            <td>@Model.PositionType</td>
-
-            @if (User.IsInRole("Employer"))
+            else
             {
-                <td>@Model.IsOpened</td>
+                @for (int i = 0; i < Model.Requirements.Count; i++)
+                {
+                    <li>@Model.Requirements[i].RequirementName</li>
+                }
             }
-        </tr>
-    </tbody>
+        </ul>
+    </div>
 
-</table>
+    <h2>Benefits</h2>
+    <div class="main-wrapper">
+        <ul class="table">
+            @if (Model.Benefits.Count == 0)
+            {
+                <p>No benefits yet</p>
+            }
+            else
+            {
+                @for (int i = 0; i < Model.Benefits.Count; i++)
+                {
+                    <li>@Model.Benefits[i].BenefitName</li>
+                }
+            }
+        </ul>
+    </div>
 
-<ul>
-    @if (Model.Requirements.Count == 0)
+    <h2>Tags</h2>
+    <div class="main-wrapper">
+        <ul class="table">
+            @if (Model.Tags.Count == 0)
+            {
+                <p>No tags yet</p>
+            }
+            else
+            {
+
+                @for (int i = 0; i < Model.Tags.Count; i++)
+                {
+                    <li>@Model.Tags[i].TagName</li>
+                }
+            }
+        </ul>
+    </div>
+
+    @if (User.IsInRole("Employer"))
+    {   
+        <h2>Applicants</h2>
+            <ul class="table">
+                @for (int i = 0; i < Model.Applicants.Count; i++)
+                {
+                    <li>@Model.Applicants[i].Name</li>
+                }
+            </ul>
+        <div class="main-wrapper"></div>
+    }
+
+    @if (User.IsInRole("User"))
     {
-       <p>No benefits yet</p>
+        <form asp-controller="Job" asp-action="Apply" method="post" asp-route-id=@Model.JobId>
+            <input type="submit" value="Apply for this job" />
+        </form>
     }
-    else
-    {
-        @for (int i = 0; i < Model.Requirements.Count; i++)
-        {
-            <li>@Model.Requirements[i].RequirementName</li>
-        }
-    }
-
-
-</ul>
-
-<ul>
-    @if (Model.Benefits.Count == 0)
-    {
-        <p>No benefits yet</p>
-    }
-    else  
-    {
-        @for (int i = 0; i < Model.Benefits.Count; i++)
-        {
-            <li>@Model.Benefits[i].BenefitName</li>
-        }
-    }
-</ul>
-
-<ul>
-    @if (Model.Tags.Count == 0)
-    {
-        <p>No tags yet</p>
-    }
-    else
-    {
-
-        @for (int i = 0; i < Model.Tags.Count; i++)
-        {
-            <li>@Model.Tags[i].TagName</li>
-        }
-    }
-</ul>
-
-<ul>
-    @if (User.IsInRole("Employer")) {
-        @for (int i = 0; i < Model.Applicants.Count; i++)
-        {
-            <li>@Model.Applicants[i].Name</li>
-        }
-    }
-</ul>
-
-@if (User.IsInRole("User"))
-{
-<form asp-controller="Job" asp-action="Apply" method="post" asp-route-id=@Model.JobId>
-    <input type="submit" value="Apply for this job"/>
-</form>
-}
-<a asp-controller="Job" asp-action="Index">Return to index listing</a>
+    <a asp-controller="Job" asp-action="Index">Return to index listing</a>
+</div>

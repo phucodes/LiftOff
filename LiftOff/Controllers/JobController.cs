@@ -169,6 +169,7 @@ namespace LiftOff.Controllers
                 PositionType = viewJob.PositionType,
                 PositionLevel = viewJob.PositionLevel,
                 Description = viewJob.Description,
+                Employer = viewJob.Employer,
                 Requirements = Requirements,
                 Benefits = Benefits,
                 Tags = Tags,
@@ -370,6 +371,26 @@ namespace LiftOff.Controllers
             return View(matchedJobs);
         }
 
+        //TODO: dave@launchcode.org
+
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        public IActionResult Apply()
+        {
+            string userId = _userManager.GetUserId(User);
+            List<Applicant> appliedJobs = context.Applicants.Where(j => j.UserId == userId).ToList();
+
+            List<Job> matchedJobs = new List<Job>();
+
+            foreach (var item in appliedJobs)
+            {
+                Job matchedJob = context.Job.FirstOrDefault(j => j.JobId == item.JobId);
+                matchedJobs.Add(matchedJob);
+            }
+
+            return View(matchedJobs);
+        }
+
         [HttpPost]
         [Authorize(Roles = "User")]
         public IActionResult Apply(int id, ApplicationUser applicationUser, AddJobViewModel viewJob)
@@ -388,7 +409,7 @@ namespace LiftOff.Controllers
             context.Applicants.Add(newApplicant);
             context.SaveChanges();
 
-            return Redirect("/Job");
+            return RedirectToAction("/Apply");
         }
 
     }

@@ -1,31 +1,17 @@
 ﻿@model List<LiftOff.Models.Job>
 
-<h1>@Model.Count Result(s)</h1>
+<div class="search-view">
+    <h1>@Model.Count Result(s)</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Date Posted</th>
-            <th scope="col">Location</th>
-            <th scope="col">Position Level</th>
-            <th scope="col">Position Type</th>
-            <th scope="col">Employer</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var job in Model)
-        {
-        <tr>
-            <td>@job.Name</td>
-            <td>@job.DatePosted</td>
-            <td>@job.Location</td>
-            <td>@job.PositionLevel</td>
-            <td>@job.PositionType</td>
-            <td>@job.Employer</td>
-            <td><a asp-controller="Job" asp-action="ViewJob" asp-route-id=@job.JobId>Details</a></td>
-            <!--<td><a asp-controller="Job" asp-action="ViewJob" asp-route-id=@job.JobId>Details</a></td>-->
-        </tr>
-        }
-    </tbody>
-</table>
+    @foreach(var job in Model)
+    {
+    <div class="card-tag">
+        <h2><a asp-controller="Job" asp-action="ViewJob" asp-route-id=@job.JobId>@job.Name</a></h2>
+        <p>@job.Employer</p>
+        <p>@job.DatePosted</p>
+        <p>@job.Location</p>
+        <p>@job.PositionType</p>
+        <p>@job.PositionLevel</p>
+    </div>
+    }
+</div>

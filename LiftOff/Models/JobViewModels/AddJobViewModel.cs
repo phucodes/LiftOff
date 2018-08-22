@@ -44,6 +44,8 @@ namespace LiftOff.Models.JobViewModels
         public List<TagViewModel> Tags { get; set; }
 
         public int JobId { get; set; }
+
+        public string Employer { get; set; }
     }
     
 }

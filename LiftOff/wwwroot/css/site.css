@@ -56,6 +56,8 @@
     transition: 0.3s ease-in-out;
 }
 
+.form-block textarea:focus,
+.form-block input:focus,
 .form-subblock input:focus,
 .search-box:focus {
     border-color: rgba(126, 239, 104, 0.8);
@@ -98,6 +100,8 @@
     width: calc(50% - 5px);
 }
 
+.form-block textarea:focus,
+.form-block input,
 .form-subblock input {
     width: 100%;
     transition: 0.3s ease-in-out;
@@ -131,4 +135,104 @@
     color: white;
     background-color: #424242;
     border: 1px solid white;
+}
+
+.view-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.view-wrapper h1,
+.view-wrapper h2 {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 25%;
+    border-bottom: 1px solid #d53838;
+    margin: 0 auto;
+}
+
+.main-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+}
+
+.table-flex {
+    width: 35%;
+    padding: 15px 0;
+
+    position: relative;
+    z-index: 1;
+}
+
+.table-flex:nth-of-type(odd):before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 10%;
+    border-bottom: 1px solid #d53838;
+    margin: 0 auto;
+}
+
+.view-wrapper h2 {
+    margin: 20px 0;
+    padding: 20px 0;
+    position: relative;
+    z-index: 1;
+}
+
+.table {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.table li {
+    width: 100%;
+    padding: 10px 0;
+}
+
+.card-tag {
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+    margin: 20px 0;
+
+    position: relative;
+    z-index: 1;
+}
+
+.card-tag h2 {
+    width: 100%;
+}
+
+.card-tag::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 10%;
+    border-bottom: 1px solid #d53838;
+    margin: 0 auto;
+}
+
+.search-view h1 {
+    width: 100%;
+}
+
+.card-tag p {
+    width: 50%;
 }
