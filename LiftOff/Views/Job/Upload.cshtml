@@ -1,0 +1,19 @@
+﻿@model LiftOff.Models.JobViewModels.ResumeFileViewModel
+
+<h2>Upload</h2>
+
+<div asp-validation-summary="All">
+    <form asp-controller="Job" asp-action="Upload" method="post" enctype="multipart/form-data">
+        <div>
+            @Html.LabelFor(m => m.File)
+            @Html.EditorFor(m => m.File)
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Upload" />
+            </div>
+        </div>
+    </form>
+</div>

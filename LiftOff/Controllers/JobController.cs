@@ -3,13 +3,14 @@ using LiftOff.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using LiftOff.Models.JobViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 using LiftOff.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting;
+using System.Net.Http.Headers;
 
 namespace LiftOff.Controllers
 {
@@ -19,11 +20,13 @@ namespace LiftOff.Controllers
 
         private readonly UserManager<ApplicationUser> _userManager;
 
+        private IHostingEnvironment _env;
 
-        public JobController(JobDbContext dbContext, UserManager<ApplicationUser> userManager)
+        public JobController(JobDbContext dbContext, UserManager<ApplicationUser> userManager, IHostingEnvironment env)
         {
             context = dbContext;
             _userManager = userManager;
+            _env = env;
         }
 
         [HttpGet]
@@ -410,6 +413,51 @@ namespace LiftOff.Controllers
             context.SaveChanges();
 
             return RedirectToAction("/Apply");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        public IActionResult Upload()
+        {
+            ResumeFileViewModel resumeFileViewModel = new ResumeFileViewModel();
+
+            return View(resumeFileViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "User")]
+        public IActionResult Upload(ResumeFileViewModel resumeFileViewModel)
+        {
+            string fileName = string.Empty;
+            if(ModelState.IsValid)
+            {   
+                if(resumeFileViewModel.File != null && resumeFileViewModel.File.Length > 0)
+                {
+                    // Retrieve file name
+                    fileName = ContentDispositionHeaderValue.Parse(resumeFileViewModel.File.ContentDisposition).FileName.Trim('"');
+                    // Create unique name
+                    string uniqueName = Convert.ToString(Guid.NewGuid());
+                    // Retrieve file extension
+                    string fileExtension = Path.GetExtension(fileName);
+                    // Concat name and extension
+                    string newName = uniqueName + fileExtension;
+                    // Add new path
+                    fileName = Path.Combine(_env.WebRootPath, "resume-files") + $@"\{newName}";
+                };
+
+                ResumeFile newResume = new ResumeFile
+                {   
+                    UserName = HttpContext.User.Identity.Name,
+                    UserId = _userManager.GetUserId(User),
+                    FileName = HttpContext.User.Identity.Name + "Resume",
+                    FilePath = fileName
+                };
+
+                context.Resume.Add(newResume);
+                context.SaveChanges();
+            };
+
+            return RedirectToAction("/Job");
         }
 
     }

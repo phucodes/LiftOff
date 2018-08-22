@@ -26,14 +26,7 @@ namespace LiftOff.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
-
-        private ApplicationDbContext applicationDbContext;
-
-        public ManageController(ApplicationDbContext dbContext)
-        {
-            applicationDbContext = dbContext;
-        }
-
+        
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
@@ -71,12 +64,6 @@ namespace LiftOff.Controllers
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
             };
-
-            //var currentUser = HttpContext.User.Identity.Name;
-
-            //var matchedUser = _userManager.FindByNameAsync(currentUser);
-
-            var matchedUser = _userManager.GetUserId(User);
 
             return View(model);
         }
